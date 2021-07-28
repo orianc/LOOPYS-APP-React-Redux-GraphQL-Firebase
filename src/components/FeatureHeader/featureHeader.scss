@@ -1,0 +1,26 @@
+.feature-header-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	position: relative;
+	height: 6.5rem;
+	margin-bottom: 1.5rem;
+	box-shadow: 0 1px 1px 0 #2525250e;
+}
+@media (min-width: 425px) {
+	.header {
+		padding: 0 15%;
+	}
+}
+@media (min-width: 1024px) {
+	.header {
+		padding: 0 20%;
+	}
+}
+
+.bi-arrow-left-short {
+	position: absolute;
+	left: 25px;
+	top: 33%;
+}

@@ -1,16 +1,46 @@
 import React from 'react';
-import Header from './components/Header/Header';
-import './default.scss';
+import { Route, Switch } from 'react-router-dom';
+// layout
+import MainLayout from './layout/MainLayout';
+import FeatureLayout from './layout/FeatureLayout';
 
-import Hompage from './pages/Homepage/Hompage';
+// pages
+import Homepage from './pages/Homepage/Hompage';
+import Registration from './pages/Registration/Registration';
+import NewAds from './pages/NewAds/NewAds';
+import './default.scss';
 
 function App() {
 	return (
 		<div className="App">
-			<Header />
-			<div className="main">
-				<Hompage />
-			</div>
+			<Switch>
+				<Route
+					exact
+					path="/"
+					render={() => (
+						<MainLayout>
+							<Homepage />
+						</MainLayout>
+					)}
+				/>
+				<Route
+					path="/registration"
+					render={() => (
+						<MainLayout>
+							<Registration />
+						</MainLayout>
+					)}
+				/>
+
+				<Route
+					path="/new-ads"
+					render={() => (
+						<FeatureLayout featureName="New Ads">
+							<NewAds />
+						</FeatureLayout>
+					)}
+				/>
+			</Switch>
 		</div>
 	);
 }

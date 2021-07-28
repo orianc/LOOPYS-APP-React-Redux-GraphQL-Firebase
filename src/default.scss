@@ -1,5 +1,6 @@
 html {
 	font-size: 10px;
+	color: #252525;
 }
 
 html,
@@ -7,6 +8,13 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+}
+
+html,
+body,
+.App,
+.fullHeight {
+	height: 100%;
 }
 
 *,
@@ -26,6 +34,7 @@ body {
 a {
 	text-decoration: none;
 	cursor: pointer;
+	color: #252525;
 }
 a,
 a:hover {

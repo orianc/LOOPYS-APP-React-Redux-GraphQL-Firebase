@@ -1,0 +1,18 @@
+.btn {
+	display: flex;
+	align-items: center;
+	border-radius: 5px;
+	border: 1px solid var(--main-black);
+	font-size: 1rem;
+	color: var(--main-black);
+	background-color: #ffff;
+	padding: 1rem 1rem;
+	transition: 400ms ease;
+	cursor: pointer;
+	img {
+		margin: 0 1rem;
+	}
+}
+.btn:hover {
+	border-color: #ffff;
+}

@@ -1,5 +1,7 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+
+import { auth } from './firebase/utils';
 // layout
 import MainLayout from './layout/MainLayout';
 import FeatureLayout from './layout/FeatureLayout';
@@ -12,6 +14,27 @@ import NewAds from './pages/NewAdsPage/NewAdsPage';
 import './default.scss';
 
 function App() {
+	const [currentLogged, setCurrentLogged] = useState(null);
+	console.log(currentLogged);
+	const authListener = async () => {
+		try {
+			await auth.onAuthStateChanged((userAuth) => {
+				if (!userAuth) {
+					console.log('nop user');
+					return setCurrentLogged(null);
+				}
+				console.log('yep user');
+				setCurrentLogged(userAuth);
+			});
+		} catch (error) {
+			console.error('Error on authListener()', error);
+		}
+	};
+
+	useEffect(() => {
+		authListener();
+	}, []);
+
 	return (
 		<div className="App">
 			<Switch>
@@ -19,7 +42,7 @@ function App() {
 					exact
 					path="/"
 					render={() => (
-						<MainLayout>
+						<MainLayout currentUser={currentLogged}>
 							<Homepage />
 						</MainLayout>
 					)}
@@ -27,18 +50,22 @@ function App() {
 				<Route
 					exact
 					path="/login"
-					render={() => (
-						<FeatureLayout featureName="Connexion">
-							<Login />
-						</FeatureLayout>
-					)}
+					render={() =>
+						currentLogged ? (
+							<Redirect to="/" />
+						) : (
+							<FeatureLayout featureName="Connexion">
+								<Login />
+							</FeatureLayout>
+						)
+					}
 				/>
 				<Route
 					path="/registration"
 					render={() => (
-						<MainLayout>
+						<FeatureLayout featureName="S'inscrire">
 							<Registration />
-						</MainLayout>
+						</FeatureLayout>
 					)}
 				/>
 

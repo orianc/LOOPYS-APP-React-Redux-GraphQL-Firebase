@@ -1,7 +1,13 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-
 import { firebaseConfig } from './config';
 
-// continue to config firebase, to setup google auth available with a new modal or just a page extern.
+firebase.initializeApp(firebaseConfig);
+
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+
+GoogleProvider.setCustomParameters({ prompt: 'select_account' });
+export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);

@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Login = (props) => {
-	return (
-		<div>
-			<h1>Login page</h1>
-		</div>
-	);
+import SignIn from '../../components/SignIn/SignIn';
+
+const LoginPage = (props) => {
+	return <SignIn />;
 };
 
-export default Login;
+export default LoginPage;

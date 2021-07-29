@@ -1,6 +1,15 @@
+:root {
+	/* Colors: */
+	--main-black: #252525;
+	--main-yellow: #e9ba00;
+	--main-red: #b40707;
+	--main-grey: #f0f0f0;
+	--conditional-blue: #2699fb;
+}
+
 html {
 	font-size: 10px;
-	color: #252525;
+	color: var(--main-black);
 }
 
 html,
@@ -34,7 +43,7 @@ body {
 a {
 	text-decoration: none;
 	cursor: pointer;
-	color: #252525;
+	color: var(--main-black);
 }
 a,
 a:hover {

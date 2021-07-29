@@ -1,0 +1,24 @@
+.sign-in {
+	display: block;
+	width: 100%;
+	max-width: 40rem;
+	margin: 4rem auto 6rem;
+	padding: 2rem 0;
+	.wrap {
+		padding: 0 0.3rem;
+		align-items: baseline;
+		height: auto;
+	}
+	h2 {
+		width: 100%;
+		text-align: center;
+		text-transform: uppercase;
+		font-size: 1.4rem;
+		font-weight: 600;
+	}
+
+	.row {
+		display: flex;
+		justify-content: center;
+	}
+}

@@ -5,9 +5,10 @@ import MainLayout from './layout/MainLayout';
 import FeatureLayout from './layout/FeatureLayout';
 
 // pages
-import Homepage from './pages/Homepage/Hompage';
-import Registration from './pages/Registration/Registration';
-import NewAds from './pages/NewAds/NewAds';
+import Homepage from './pages/HomePage/HomePage';
+import Registration from './pages/RegistrationPage/RegistrationPage';
+import Login from './pages/LoginPage/LoginPage';
+import NewAds from './pages/NewAdsPage/NewAdsPage';
 import './default.scss';
 
 function App() {
@@ -21,6 +22,15 @@ function App() {
 						<MainLayout>
 							<Homepage />
 						</MainLayout>
+					)}
+				/>
+				<Route
+					exact
+					path="/login"
+					render={() => (
+						<FeatureLayout featureName="Connexion">
+							<Login />
+						</FeatureLayout>
 					)}
 				/>
 				<Route

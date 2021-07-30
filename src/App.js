@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import { auth } from './firebase/utils';
+import { auth, handleUserProfile } from './firebase/utils';
 // layout
 import MainLayout from './layout/MainLayout';
 import FeatureLayout from './layout/FeatureLayout';
@@ -14,27 +14,37 @@ import NewAds from './pages/NewAdsPage/NewAdsPage';
 import './default.scss';
 
 function App() {
+	// ----------- Check if someone is logged.
 	const [currentLogged, setCurrentLogged] = useState(null);
-	console.log(currentLogged);
-	const authListener = async () => {
-		try {
-			await auth.onAuthStateChanged((userAuth) => {
-				if (!userAuth) {
-					console.log('nop user');
-					return setCurrentLogged(null);
-				}
-				console.log('yep user');
-				setCurrentLogged(userAuth);
-			});
-		} catch (error) {
-			console.error('Error on authListener()', error);
-		}
+	/**
+	 * Check if someone is logged and set currentLogged state.
+	 * @todo You have to initialize a useState hook before like this :
+	 * @example const [currentLogged, setCurrentLogged] = useState(null);
+	 *
+	 */
+	const authListener = () => {
+		auth.onAuthStateChanged(async (userAuth) => {
+			if (userAuth) {
+				const userRef = await handleUserProfile(userAuth);
+				userRef.onSnapshot((snapshot) => {
+					setCurrentLogged({
+						id: snapshot.id,
+						...snapshot.data,
+					});
+				});
+				return console.log('User log');
+			}
+			setCurrentLogged(null);
+			return console.log('No user logged in');
+		});
 	};
 
+	// ----------- Loop instruction on app initialization.
 	useEffect(() => {
 		authListener();
 	}, []);
 
+	// ----------- Routing define with layout and page associate.
 	return (
 		<div className="App">
 			<Switch>

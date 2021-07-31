@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
-import Button from '../../statics-components/Forms/Button/Button';
 import './signIn.scss';
+
+import FormButtonTier from '../../statics-components/Forms/FormButtonTier/FormButtonTier';
 import GoogleIcon from './../../assets/google-icon.svg';
 import { signInWithGoogle } from '../../firebase/utils';
 
@@ -14,16 +14,16 @@ class SignIn extends Component {
 		return (
 			<div className="sign-in">
 				<div className="wrap">
-					<h2>Authentification</h2>
+					<h2>Se connecter</h2>
 				</div>
 
 				<div>
 					<form onSubmit={this.handleSubmit} className="formWrap">
 						<div className="socialSignin">
 							<div className="row">
-								<Button onClick={signInWithGoogle} icon={GoogleIcon}>
+								<FormButtonTier onClick={signInWithGoogle} icon={GoogleIcon}>
 									Se connecter avec Google
-								</Button>
+								</FormButtonTier>
 							</div>
 						</div>
 					</form>

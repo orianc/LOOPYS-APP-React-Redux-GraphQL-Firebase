@@ -1,10 +1,9 @@
-.sign-in {
+.sign-up {
 	display: block;
 	width: 100%;
 	max-width: 40rem;
 	margin: 4rem auto 6rem;
 	padding: 2rem 0;
-
 	.wrap {
 		padding: 0 0.3rem;
 		align-items: baseline;
@@ -12,7 +11,12 @@
 	}
 	.row {
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+
+		form {
+			margin: 1.2rem auto;
+		}
 	}
 	h2 {
 		width: 100%;
@@ -20,5 +24,14 @@
 		text-transform: uppercase;
 		font-size: 1.4rem;
 		font-weight: 600;
+		margin: 0;
+	}
+	.policy {
+		width: 70%;
+		font-size: 0.8rem;
+		text-align: center;
+		a {
+			color: dodgerblue;
+		}
 	}
 }

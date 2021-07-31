@@ -4,7 +4,7 @@ import './button.scss';
 const Button = ({ children, ...otherProps }) => {
 	return (
 		<button className="btn" {...otherProps}>
-			<img src={otherProps.icon} />
+			{otherProps.icon && <img src={otherProps.icon} />}
 			{children}
 		</button>
 	);

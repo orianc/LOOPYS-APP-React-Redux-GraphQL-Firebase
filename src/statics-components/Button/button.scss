@@ -1,12 +1,16 @@
 .btn {
 	display: flex;
 	align-items: center;
-	border-radius: 5px;
+
+	padding: 1rem;
+	background-color: var(--main-black);
 	border: 1px solid var(--main-black);
+	border-radius: 5px;
+
 	font-size: 1rem;
-	color: var(--main-black);
-	background-color: #ffff;
-	padding: 1rem 1rem;
+	text-transform: uppercase;
+	color: #ffff;
+
 	transition: 400ms ease;
 	cursor: pointer;
 	img {
@@ -14,5 +18,5 @@
 	}
 }
 .btn:hover {
-	border-color: #ffff;
+	padding: 1.5rem;
 }

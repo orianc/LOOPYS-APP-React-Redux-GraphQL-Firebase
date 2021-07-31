@@ -8,8 +8,7 @@ import FeatureLayout from './layout/FeatureLayout';
 
 // pages
 import Homepage from './pages/HomePage/HomePage';
-import Registration from './pages/RegistrationPage/RegistrationPage';
-import Login from './pages/LoginPage/LoginPage';
+import AuthPage from './pages/AuthPage/AuthPage';
 import NewAds from './pages/NewAdsPage/NewAdsPage';
 import './default.scss';
 
@@ -64,19 +63,11 @@ function App() {
 						currentLogged ? (
 							<Redirect to="/" />
 						) : (
-							<FeatureLayout featureName="Connexion">
-								<Login />
+							<FeatureLayout featureName="Authentification">
+								<AuthPage />
 							</FeatureLayout>
 						)
 					}
-				/>
-				<Route
-					path="/registration"
-					render={() => (
-						<FeatureLayout featureName="S'inscrire">
-							<Registration />
-						</FeatureLayout>
-					)}
 				/>
 
 				<Route

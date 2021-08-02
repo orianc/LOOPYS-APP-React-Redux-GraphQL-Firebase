@@ -1,37 +1,92 @@
 import React, { useState } from 'react';
 import './signup.scss';
 
+import { auth, handleUserProfile } from './../../firebase/utils';
 import { Link } from 'react-router-dom';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import Button from '../../statics-components/Button/Button';
 
 const SignUp = (props) => {
-	const [userInformations, setUserInformations] = useState({
-		displayName: 'Test',
+	const [userInformation, setUserInformation] = useState({
+		displayName: '',
 		email: '',
 		password: '',
 		confirmPassword: '',
+		errors: [],
 	});
+	const { displayName, email, password, confirmPassword, errors } = userInformation;
 
-	const { displayName, email, password, confirmPassword } = userInformations;
+	const handleChangeSetUserInformation = (e) => {
+		setUserInformation({ ...userInformation, [e.target.name]: e.target.value });
+	};
+
+	const handleFormSubmit = async (e) => {
+		e.preventDefault();
+
+		if (password !== confirmPassword) {
+			const err = ['Les mots de passe ne correspondent pas.'];
+			return setUserInformation({ ...userInformation, errors: err });
+		}
+		setUserInformation({ ...userInformation, errors: [] });
+
+		try {
+			const { user } = await auth.createUserWithEmailAndPassword(email, password);
+			await handleUserProfile(user, { displayName });
+			setUserInformation();
+		} catch (err) {
+			console.error('error', err.code, 'on form submission', err.message);
+			setUserInformation({ ...userInformation, errors: [err.message] });
+		}
+	};
+
+	console.log('user information : ', userInformation);
+
 	return (
 		<div className="sign-up">
 			<div className="wrap">
 				<h2>Créer un compte</h2>
 			</div>
-			<div className="row">
-				<form>
-					<FormInput type="text" name={displayName} placeholder="Nom Prénom" />
-					<FormInput type="email" name={email} placeholder="Email" />
-					<FormInput type="password" name={password} placeholder="Password" />
-					<FormInput type="password" name={confirmPassword} placeholder="Confirm password" />
-				</form>
-				<Button>Sign up</Button>
-				<p className="policy">
-					By creating an account you agree to our
-					<Link to="/terms-page"> Terms of Service and Privacy Policy</Link>
-				</p>
-			</div>
+			<form className="row" onSubmit={handleFormSubmit}>
+				{errors.length > 0 && (
+					<ul className="errors">
+						<h3>Erreur de formulaire</h3>
+						{errors.map((err, index) => {
+							return <li key={index}>{err}</li>;
+						})}
+					</ul>
+				)}
+
+				<FormInput
+					type="text"
+					name="displayName"
+					value={displayName}
+					placeholder="Nom Prénom"
+					handleChange={(e) => handleChangeSetUserInformation(e)}
+				/>
+				<FormInput value={email} type="email" name="email" placeholder="Email" handleChange={(e) => handleChangeSetUserInformation(e)} />
+				<FormInput
+					type="password"
+					name="password"
+					value={password}
+					placeholder="Mot de passe"
+					handleChange={(e) => handleChangeSetUserInformation(e)}
+				/>
+
+				<FormInput
+					type="password"
+					name="confirmPassword"
+					value={confirmPassword}
+					handleChange={(e) => handleChangeSetUserInformation(e)}
+					placeholder="Confirmer mot de passe"
+				/>
+				<div className="row">
+					<Button type="submit">Sign up</Button>
+					<p className="policy">
+						By creating an account you agree to our
+						<Link to="/privacy"> Terms of Service and Privacy Policy</Link>
+					</p>
+				</div>
+			</form>
 		</div>
 	);
 };

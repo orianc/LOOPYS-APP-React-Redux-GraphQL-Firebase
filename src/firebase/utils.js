@@ -17,18 +17,12 @@ export const handleUserProfile = async (userAuth, additionalData) => {
 	console.log('userAuth : ', userAuth);
 	// get uid from google userAuth
 	const { uid } = userAuth;
-	console.log('uid from userAuth : ', uid);
-
-	// try to get userRef in firestore db associate at this uid google,
-	// this const become the user doc or stay null
+	// try to SELECT in db the document associate at this uid google,
 	const userRef = firestore.doc(`users/${uid}`);
-	console.log('user ref : ', userRef);
-
-	//
+	// GET value from document previously selected
 	const snapshot = await userRef.get();
-	console.log('snapshot : ', snapshot);
 
-	// if user doesn't exist in db, it will be create here
+	// if user doesn't exist in db, we make it.
 	if (!snapshot.exists) {
 		const { displayName, email } = userAuth;
 		const timestamp = new Date();

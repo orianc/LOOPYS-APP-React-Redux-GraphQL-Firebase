@@ -11,6 +11,7 @@ import Homepage from './pages/HomePage/HomePage';
 import AuthPage from './pages/AuthPage/AuthPage';
 import NewAds from './pages/NewAdsPage/NewAdsPage';
 import './default.scss';
+import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 
 function App() {
 	// ----------- Check if someone is logged.
@@ -75,6 +76,15 @@ function App() {
 					render={() => (
 						<FeatureLayout featureName="New Ads">
 							<NewAds />
+						</FeatureLayout>
+					)}
+				/>
+
+				<Route
+					path="/privacy"
+					render={() => (
+						<FeatureLayout featureName="Terms of Services and Privacy">
+							<PrivacyPage />
 						</FeatureLayout>
 					)}
 				/>

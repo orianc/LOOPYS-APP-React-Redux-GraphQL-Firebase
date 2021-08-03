@@ -8,7 +8,6 @@ const AuthPage = (props) => {
 	return (
 		<div className="auth-page">
 			<SignIn />
-			<div className="separator"></div>
 			<SignUp />
 		</div>
 	);

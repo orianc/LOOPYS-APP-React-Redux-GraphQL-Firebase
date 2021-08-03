@@ -13,8 +13,11 @@
 		margin: 0 1rem;
 	}
 }
-.btn:hover {
+.btn-tier:hover {
+	// background-color: var(--main-red);
+	// color: #ffff;
 	border-color: #ffff;
+	padding: 1rem;
 }
 
 .bg-black {

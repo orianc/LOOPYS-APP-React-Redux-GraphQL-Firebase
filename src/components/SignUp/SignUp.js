@@ -6,14 +6,15 @@ import { Link } from 'react-router-dom';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import Button from '../../statics-components/Button/Button';
 
+const initialState = {
+	displayName: '',
+	email: '',
+	password: '',
+	confirmPassword: '',
+	errors: [],
+};
 const SignUp = (props) => {
-	const [userInformation, setUserInformation] = useState({
-		displayName: '',
-		email: '',
-		password: '',
-		confirmPassword: '',
-		errors: [],
-	});
+	const [userInformation, setUserInformation] = useState(initialState);
 	const { displayName, email, password, confirmPassword, errors } = userInformation;
 
 	const handleChangeSetUserInformation = (e) => {
@@ -32,7 +33,7 @@ const SignUp = (props) => {
 		try {
 			const { user } = await auth.createUserWithEmailAndPassword(email, password);
 			await handleUserProfile(user, { displayName });
-			setUserInformation();
+			setUserInformation(initialState);
 		} catch (err) {
 			console.error('error', err.code, 'on form submission', err.message);
 			setUserInformation({ ...userInformation, errors: [err.message] });
@@ -80,7 +81,7 @@ const SignUp = (props) => {
 					placeholder="Confirmer mot de passe"
 				/>
 				<div className="row">
-					<Button type="submit">Sign up</Button>
+					<Button type="submit">Inscription</Button>
 					<p className="policy">
 						By creating an account you agree to our
 						<Link to="/privacy"> Terms of Service and Privacy Policy</Link>

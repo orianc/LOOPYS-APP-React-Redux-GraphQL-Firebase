@@ -3,6 +3,7 @@ import './signup.scss';
 
 import { auth, handleUserProfile } from './../../firebase/utils';
 import { Link } from 'react-router-dom';
+import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import Button from '../../statics-components/Button/Button';
 
@@ -43,11 +44,8 @@ const SignUp = (props) => {
 	console.log('user information : ', userInformation);
 
 	return (
-		<div className="sign-up">
-			<div className="wrap">
-				<h2>Créer un compte</h2>
-			</div>
-			<form className="row" onSubmit={handleFormSubmit}>
+		<AuthWrapper headLine="Créer un compte">
+			<form className="signUpEmailPw" onSubmit={handleFormSubmit}>
 				{errors.length > 0 && (
 					<ul className="errors">
 						<h3>Erreur de formulaire</h3>
@@ -80,7 +78,7 @@ const SignUp = (props) => {
 					handleChange={(e) => handleChangeSetUserInformation(e)}
 					placeholder="Confirmer mot de passe"
 				/>
-				<div className="row">
+				<div className="wrap">
 					<Button type="submit">Inscription</Button>
 					<p className="policy">
 						By creating an account you agree to our
@@ -88,7 +86,7 @@ const SignUp = (props) => {
 					</p>
 				</div>
 			</form>
-		</div>
+		</AuthWrapper>
 	);
 };
 

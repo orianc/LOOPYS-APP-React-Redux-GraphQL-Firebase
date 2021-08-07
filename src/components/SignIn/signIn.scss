@@ -1,26 +1,13 @@
-.sign-in {
-	display: block;
-	width: 100%;
-	max-width: 40rem;
-	margin: 0 auto;
-	padding: 2rem 0;
-
-	.wrap {
-		padding: 0 0.3rem;
-		align-items: baseline;
-		height: auto;
-	}
-	.row {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin: 1rem auto;
-	}
-	h2 {
-		width: 100%;
-		text-align: center;
+.emailPwSignIn {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+	.pwRecovery {
+		font-size: 0.8rem;
 		text-transform: uppercase;
-		font-size: 1.4rem;
-		font-weight: 600;
+		margin: 0 auto 2rem auto;
+		a {
+			color: dodgerblue;
+		}
 	}
 }

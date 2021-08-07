@@ -1,6 +1,7 @@
 .btn-tier {
 	display: flex;
 	align-items: center;
+	margin: 1rem;
 	border-radius: 5px;
 	border: 1px solid var(--main-black);
 	font-size: 1rem;
@@ -14,8 +15,6 @@
 	}
 }
 .btn-tier:hover {
-	// background-color: var(--main-red);
-	// color: #ffff;
 	border-color: #ffff;
 	padding: 1rem;
 }

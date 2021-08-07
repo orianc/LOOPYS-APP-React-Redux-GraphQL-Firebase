@@ -5,13 +5,14 @@ import { auth, handleUserProfile } from './firebase/utils';
 // layout
 import MainLayout from './layout/MainLayout';
 import FeatureLayout from './layout/FeatureLayout';
+import './default.scss';
 
 // pages
 import Homepage from './pages/HomePage/HomePage';
 import AuthPage from './pages/AuthPage/AuthPage';
 import NewAds from './pages/NewAdsPage/NewAdsPage';
-import './default.scss';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
+import RecoveryPage from './pages/Recovery/RecoveryPage copy';
 
 function App() {
 	// ----------- Check if someone is logged.
@@ -76,6 +77,15 @@ function App() {
 					render={() => (
 						<FeatureLayout featureName="New Ads">
 							<NewAds />
+						</FeatureLayout>
+					)}
+				/>
+
+				<Route
+					path="/recovery"
+					render={() => (
+						<FeatureLayout featureName="Récupération de mot de passe">
+							<RecoveryPage />
 						</FeatureLayout>
 					)}
 				/>

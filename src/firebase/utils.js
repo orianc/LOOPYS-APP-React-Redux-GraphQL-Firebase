@@ -14,12 +14,13 @@ export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
 
 export const handleUserProfile = async (userAuth, additionalData) => {
 	if (!userAuth) return;
-	console.log('userAuth : ', userAuth);
-	// get uid from google userAuth
+	// console.log('userAuth : ', userAuth);
+
+	// -- get uid from google userAuth
 	const { uid } = userAuth;
-	// try to SELECT in db the document associate at this uid google,
+	// -- try to SELECT in db the document associate at this uid google,
 	const userRef = firestore.doc(`users/${uid}`);
-	// GET value from document previously selected
+	// -- GET value from document previously selected
 	const snapshot = await userRef.get();
 
 	// if user doesn't exist in db, we make it.

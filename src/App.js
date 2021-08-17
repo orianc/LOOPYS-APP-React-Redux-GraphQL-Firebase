@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+// react & react-router-dom
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-
+// firebase
 import { auth, handleUserProfile } from './firebase/utils';
+// redux
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/User/user.actions';
 // layout
 import MainLayout from './layout/MainLayout';
 import FeatureLayout from './layout/FeatureLayout';
 import './default.scss';
-
 // pages
 import Homepage from './pages/HomePage/HomePage';
 import AuthPage from './pages/AuthPage/AuthPage';
@@ -14,28 +17,36 @@ import NewAds from './pages/NewAdsPage/NewAdsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
 
-function App() {
-	// ----------- Check if someone is logged.
-	const [currentLogged, setCurrentLogged] = useState(null);
+const mapStateToProps = ({ user }) => ({ currentUser: user.currentUser });
+const mapDispatchToProps = (dispatch) => ({
+	setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+function App(props) {
+	// console.log('props App : ', props);
+
+	// --- destructuring 'store' from Redux Provider
+	const { setCurrentUser } = props;
+	const { currentUser } = props;
+
+	// --- old user state with useState from React
+	// const [currentUser, setCurrentUser] = useState(null);
+
 	/**
 	 * Check if someone is logged and set currentLogged state.
-	 * @todo You have to initialize a useState hook before like this :
-	 * @example const [currentLogged, setCurrentLogged] = useState(null);
-	 *
 	 */
 	const authListener = () => {
 		auth.onAuthStateChanged(async (userAuth) => {
 			if (userAuth) {
 				const userRef = await handleUserProfile(userAuth);
 				userRef.onSnapshot((snapshot) => {
-					setCurrentLogged({
+					setCurrentUser({
 						id: snapshot.id,
 						...snapshot.data,
 					});
 				});
 				return console.log('User log');
 			}
-			setCurrentLogged(null);
+			setCurrentUser(userAuth);
 			return console.log('No user logged in');
 		});
 	};
@@ -53,7 +64,7 @@ function App() {
 					exact
 					path="/"
 					render={() => (
-						<MainLayout currentUser={currentLogged}>
+						<MainLayout>
 							<Homepage />
 						</MainLayout>
 					)}
@@ -62,7 +73,7 @@ function App() {
 					exact
 					path="/login"
 					render={() =>
-						currentLogged ? (
+						currentUser ? (
 							<Redirect to="/" />
 						) : (
 							<FeatureLayout featureName="Authentification">
@@ -103,4 +114,4 @@ function App() {
 	);
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

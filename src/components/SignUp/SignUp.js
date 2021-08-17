@@ -41,7 +41,8 @@ const SignUp = (props) => {
 		}
 	};
 
-	console.log('user information : ', userInformation);
+	// -- to see the js object in change value on form SignUp
+	// console.log('user information : ', userInformation);
 
 	return (
 		<AuthWrapper headLine="Créer un compte">

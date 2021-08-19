@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './signup.scss';
 
 import { auth, handleUserProfile } from './../../firebase/utils';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import Button from '../../statics-components/Button/Button';
@@ -35,6 +35,7 @@ const SignUp = (props) => {
 			const { user } = await auth.createUserWithEmailAndPassword(email, password);
 			await handleUserProfile(user, { displayName });
 			setUserInformation(initialState);
+			props.history.push('/');
 		} catch (err) {
 			console.error('error', err.code, 'on form submission', err.message);
 			setUserInformation({ ...userInformation, errors: [err.message] });
@@ -91,4 +92,4 @@ const SignUp = (props) => {
 	);
 };
 
-export default SignUp;
+export default withRouter(SignUp);

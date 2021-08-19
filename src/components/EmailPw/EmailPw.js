@@ -26,13 +26,19 @@ const EmailPw = (props) => {
 			const configReset = {
 				url: 'http://localhost:3000/login',
 			};
-			await auth.sendPasswordResetEmail(email, configReset).then(() => {
-				console.log('Password Reset');
-				setUserLogin({ ...userLogin, errors: [], reset: true });
-				return setTimeout(() => {
-					props.history.push('/login');
-				}, '1000ms');
-			});
+			await auth
+				.sendPasswordResetEmail(email, configReset)
+				.then(() => {
+					setUserLogin({ ...userLogin, errors: [], reset: true });
+					console.log('Password Reset');
+					setTimeout(() => {
+						props.history.push('/login');
+					}, 3500);
+				})
+				.catch((err) => {
+					setUserLogin({ ...userLogin, errors: [err.message], reset: false });
+					return console.error('Error on reset password submission', err);
+				});
 		} catch (err) {
 			setUserLogin({ ...userLogin, errors: [err.message], reset: false });
 			return console.error('Error on reset password submission', err);

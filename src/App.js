@@ -6,6 +6,10 @@ import { auth, handleUserProfile } from './firebase/utils';
 // redux
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/User/user.actions';
+
+// hoc
+import WithAuth from './hoc/withAuth';
+
 // layout
 import MainLayout from './layout/MainLayout';
 import FeatureLayout from './layout/FeatureLayout';
@@ -16,17 +20,18 @@ import AuthPage from './pages/AuthPage/AuthPage';
 import NewAds from './pages/NewAdsPage/NewAdsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
+import DashboardPage from './pages/DashboardPage/DashboardPage';
 
 const mapStateToProps = ({ user }) => ({ currentUser: user.currentUser });
 const mapDispatchToProps = (dispatch) => ({
 	setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
-function App(props) {
+
+const App = (props) => {
 	// console.log('props App : ', props);
 
 	// --- destructuring 'store' from Redux Provider
-	const { setCurrentUser } = props;
-	const { currentUser } = props;
+	const { setCurrentUser, currentUser } = props;
 
 	// --- old user state with useState from React
 	// const [currentUser, setCurrentUser] = useState(null);
@@ -46,11 +51,11 @@ function App(props) {
 				});
 				return console.log('User log');
 			}
+
 			setCurrentUser(userAuth);
 			return console.log('No user logged in');
 		});
 	};
-
 	// ----------- Loop instruction on app initialization.
 	useEffect(() => {
 		authListener();
@@ -72,17 +77,22 @@ function App(props) {
 				<Route
 					exact
 					path="/login"
-					render={() =>
-						currentUser ? (
-							<Redirect to="/" />
-						) : (
-							<FeatureLayout featureName="Authentification">
-								<AuthPage />
-							</FeatureLayout>
-						)
-					}
+					render={() => (
+						<FeatureLayout featureName="Authentification">
+							<AuthPage />
+						</FeatureLayout>
+					)}
 				/>
-
+				<Route
+					path="/dashboard"
+					render={() => (
+						<WithAuth>
+							<FeatureLayout featureName="Dashboard">
+								<DashboardPage />
+							</FeatureLayout>
+						</WithAuth>
+					)}
+				/>
 				<Route
 					path="/new-ads"
 					render={() => (
@@ -112,6 +122,6 @@ function App(props) {
 			</Switch>
 		</div>
 	);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

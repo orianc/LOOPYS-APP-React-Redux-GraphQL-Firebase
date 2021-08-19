@@ -1,35 +1,42 @@
 import React, { useState } from 'react';
 import './signIn.scss';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormButtonTier from '../../statics-components/Forms/FormButtonTier/FormButtonTier';
 import GoogleIcon from './../../assets/google-icon.svg';
 import { signInWithGoogle, auth } from '../../firebase/utils';
 import FormInput from './../../statics-components/Forms/FormInput/FormInput';
 import Button from './../../statics-components/Button/Button';
+
 const initialState = {
 	email: '',
 	password: '',
 	errors: [],
 };
+
 const SignIn = (props) => {
 	const [userLogin, setUserLogin] = useState(initialState);
 	const { email, password, errors } = userLogin;
+
+	const handleChange = (e) => {
+		setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
+	};
+
+	const resetForm = () => {
+		setUserLogin(initialState);
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			await auth.signInWithEmailAndPassword(email, password);
-			setUserLogin(initialState);
+			resetForm();
+			props.history.push('/');
 		} catch (err) {
 			console.error('Error on submit login form', err);
 			setUserLogin({ ...userLogin, errors: [err.message] });
 		}
-	};
-
-	const handleChange = (e) => {
-		setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
 	};
 
 	return (
@@ -65,4 +72,4 @@ const SignIn = (props) => {
 	);
 };
 
-export default SignIn;
+export default withRouter(SignIn);

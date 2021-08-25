@@ -1,57 +1,76 @@
-import React, { useState } from 'react';
-import './signup.scss';
-
-import { auth, handleUserProfile } from './../../firebase/utils';
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpUser } from '../../redux/User/user.actions';
+// component
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import Button from '../../statics-components/Button/Button';
+// scss
+import './signup.scss';
 
-const initialState = {
-	displayName: '',
-	email: '',
-	password: '',
-	confirmPassword: '',
-	errors: [],
-};
+const mapState = ({ user }) => ({
+	signUpSuccess: user.signUpSuccess,
+	signUpError: user.signUpError,
+});
+
 const SignUp = (props) => {
+	const dispatch = useDispatch();
+	const initialState = {
+		displayName: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+		signUpError: [],
+	};
+	const { signUpSuccess, signUpError } = useSelector(mapState);
 	const [userInformation, setUserInformation] = useState(initialState);
-	const { displayName, email, password, confirmPassword, errors } = userInformation;
+	const { displayName, email, password, confirmPassword } = userInformation;
+
+	console.log(userInformation);
+
+	useEffect(() => {
+		if (signUpSuccess) {
+			setUserInformation(initialState);
+			props.history.push('/');
+		}
+	}, [signUpSuccess]);
+
+	useEffect(() => {
+		if (Array.isArray(signUpError) && signUpError.length > 0) {
+			setUserInformation({ signUpError });
+		}
+	}, [signUpError]);
 
 	const handleChangeSetUserInformation = (e) => {
 		setUserInformation({ ...userInformation, [e.target.name]: e.target.value });
 	};
 
-	const handleFormSubmit = async (e) => {
+	const handleFormSubmit = (e) => {
 		e.preventDefault();
-
-		if (password !== confirmPassword) {
-			const err = ['Les mots de passe ne correspondent pas.'];
-			return setUserInformation({ ...userInformation, errors: err });
-		}
-		setUserInformation({ ...userInformation, errors: [] });
-
 		try {
-			const { user } = await auth.createUserWithEmailAndPassword(email, password);
-			await handleUserProfile(user, { displayName });
-			setUserInformation(initialState);
-			props.history.push('/');
+			dispatch(
+				signUpUser({
+					displayName,
+					email,
+					password,
+					confirmPassword,
+				}),
+			);
 		} catch (err) {
-			console.error('error', err.code, 'on form submission', err.message);
+			console.error('userInfo = ', userInformation, 'error', err.code, 'on form submission', err.message);
 			setUserInformation({ ...userInformation, errors: [err.message] });
 		}
 	};
 
-	// -- to see the js object in change value on form SignUp
-	// console.log('user information : ', userInformation);
-
 	return (
 		<AuthWrapper headLine="Créer un compte">
 			<form className="signUpEmailPw" onSubmit={handleFormSubmit}>
-				{errors.length > 0 && (
+				{signUpError.length > 0 && (
 					<ul className="errors">
 						<h3>Erreur de formulaire</h3>
-						{errors.map((err, index) => {
+						{signUpError.map((err, index) => {
 							return <li key={index}>{err}</li>;
 						})}
 					</ul>

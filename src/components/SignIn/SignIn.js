@@ -1,23 +1,46 @@
-import React, { useState } from 'react';
-import './signIn.scss';
-
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+
+// firebase
+import { signInWithGoogle } from '../../firebase/utils';
+
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { signInUser } from '../../redux/User/user.actions';
+
+// components
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormButtonTier from '../../statics-components/Forms/FormButtonTier/FormButtonTier';
 import GoogleIcon from './../../assets/google-icon.svg';
-import { signInWithGoogle, auth } from '../../firebase/utils';
 import FormInput from './../../statics-components/Forms/FormInput/FormInput';
 import Button from './../../statics-components/Button/Button';
 
-const initialState = {
-	email: '',
-	password: '',
-	errors: [],
-};
+// scss
+import './signIn.scss';
+
+const mapState = ({ user }) => ({
+	signInSuccess: user.signInSuccess,
+});
 
 const SignIn = (props) => {
+	const initialState = {
+		email: '',
+		password: '',
+		errors: [],
+	};
+
+	const dispatch = useDispatch();
+	const { signInSuccess } = useSelector(mapState);
+
 	const [userLogin, setUserLogin] = useState(initialState);
 	const { email, password, errors } = userLogin;
+
+	useEffect(() => {
+		if (signInSuccess) {
+			resetForm();
+			props.history.push('/');
+		}
+	}, [signInSuccess]);
 
 	const handleChange = (e) => {
 		setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
@@ -27,14 +50,12 @@ const SignIn = (props) => {
 		setUserLogin(initialState);
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		try {
-			await auth.signInWithEmailAndPassword(email, password);
-			resetForm();
-			props.history.push('/');
+			dispatch(signInUser({ email, password }));
 		} catch (err) {
-			console.error('Error on submit login form', err);
+			console.error(err);
 			setUserLogin({ ...userLogin, errors: [err.message] });
 		}
 	};

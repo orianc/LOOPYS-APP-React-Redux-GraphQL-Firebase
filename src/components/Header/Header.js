@@ -1,16 +1,20 @@
 // dependencies
 import React from 'react';
 import { auth } from '../../firebase/utils';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 // components
 import Logo from '../../statics-components/Logo/Logo';
 // style
 import './header.scss';
 
+const mapState = ({ user }) => ({
+	currentUser: user.currentUser,
+});
+
 const Header = (props) => {
-	const { currentUser } = props;
+	const { currentUser } = useSelector(mapState);
 	return (
 		<header className="header">
 			<div className="wrap">
@@ -65,8 +69,5 @@ const Header = (props) => {
 		</header>
 	);
 };
-const mapStateToProps = ({ user }) => ({
-	currentUser: user.currentUser,
-});
 
-export default connect(mapStateToProps, null)(Header);
+export default Header;

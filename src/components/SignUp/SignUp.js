@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser } from '../../redux/User/user.actions';
+import { signUpUser, resetAllAuthForms } from '../../redux/User/user.actions';
 // component
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
@@ -33,6 +33,7 @@ const SignUp = (props) => {
 	useEffect(() => {
 		if (signUpSuccess) {
 			setUserInformation(initialState);
+			dispatch(resetAllAuthForms);
 			props.history.push('/');
 		}
 	}, [signUpSuccess]);
@@ -59,7 +60,14 @@ const SignUp = (props) => {
 				}),
 			);
 		} catch (err) {
-			console.error('userInfo = ', userInformation, 'error', err.code, 'on form submission', err.message);
+			console.error(
+				'userInfo = ',
+				userInformation,
+				'error',
+				err.code,
+				'on form submission',
+				err.message,
+			);
 			setUserInformation({ ...userInformation, errors: [err.message] });
 		}
 	};
@@ -83,7 +91,13 @@ const SignUp = (props) => {
 					placeholder="Nom Prénom"
 					handleChange={(e) => handleChangeSetUserInformation(e)}
 				/>
-				<FormInput value={email} type="email" name="email" placeholder="Email" handleChange={(e) => handleChangeSetUserInformation(e)} />
+				<FormInput
+					value={email}
+					type="email"
+					name="email"
+					placeholder="Email"
+					handleChange={(e) => handleChangeSetUserInformation(e)}
+				/>
 				<FormInput
 					type="password"
 					name="password"

@@ -1,10 +1,10 @@
 // react & react-router-dom
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 // firebase
 import { auth, handleUserProfile } from './firebase/utils';
 // redux
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from './redux/User/user.actions';
 
 // hoc
@@ -22,17 +22,11 @@ import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 
-const mapStateToProps = ({ user }) => ({ currentUser: user.currentUser });
-const mapDispatchToProps = (dispatch) => ({
-	setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
-
 const App = (props) => {
 	// console.log('props App : ', props);
 
 	// --- destructuring 'store' from Redux Provider
-	const { setCurrentUser, currentUser } = props;
-
+	const dispatch = useDispatch();
 	// --- old user state with useState from React
 	// const [currentUser, setCurrentUser] = useState(null);
 
@@ -44,15 +38,17 @@ const App = (props) => {
 			if (userAuth) {
 				const userRef = await handleUserProfile(userAuth);
 				userRef.onSnapshot((snapshot) => {
-					setCurrentUser({
-						id: snapshot.id,
-						...snapshot.data,
-					});
+					dispatch(
+						setCurrentUser({
+							id: snapshot.id,
+							...snapshot.data,
+						}),
+					);
 				});
 				return console.log('User log');
 			}
 
-			setCurrentUser(userAuth);
+			dispatch(setCurrentUser(userAuth));
 			return console.log('No user logged in');
 		});
 	};
@@ -124,4 +120,4 @@ const App = (props) => {
 	);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

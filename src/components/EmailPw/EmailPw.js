@@ -1,48 +1,62 @@
-import React, { useState } from 'react';
-import './emailPw.scss';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 
-import { auth } from '../../firebase/utils';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	resetPassword,
+	resetAllAuthForms,
+} from '../../redux/User/user.actions';
 
+// components
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import Button from '../../statics-components/Button/Button';
 import Alert from '../Alert/Alert';
 
-const initialState = {
-	email: '',
-	errors: [],
-	reset: null,
-};
+// scss
+import './emailPw.scss';
+
+const mapState = ({ user }) => ({
+	resetPasswordSuccess: user.resetPasswordSuccess,
+	resetPasswordError: user.resetPasswordError,
+});
 
 const EmailPw = (props) => {
+	const initialState = {
+		email: '',
+		errors: [],
+		reset: null,
+	};
 	const [userLogin, setUserLogin] = useState(initialState);
 	const { email, errors, reset } = userLogin;
-
+	const { resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
+	const dispatch = useDispatch();
 	console.log(userLogin);
+
+	useEffect(() => {
+		if (resetPasswordSuccess) {
+			dispatch(resetAllAuthForms);
+			setUserLogin({ ...userLogin, errors: [], reset: true });
+			setTimeout(() => {
+				props.history.push('/login');
+			}, 3500);
+		}
+	}, [resetPasswordSuccess]);
+
+	useEffect(() => {
+		if (Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
+			setUserLogin({
+				...userLogin,
+				errors: [resetPasswordError],
+				reset: false,
+			});
+		}
+	}, [resetPasswordError]);
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		try {
-			const configReset = {
-				url: 'http://localhost:3000/login',
-			};
-			await auth
-				.sendPasswordResetEmail(email, configReset)
-				.then(() => {
-					setUserLogin({ ...userLogin, errors: [], reset: true });
-					console.log('Password Reset');
-					setTimeout(() => {
-						props.history.push('/login');
-					}, 3500);
-				})
-				.catch((err) => {
-					setUserLogin({ ...userLogin, errors: [err.message], reset: false });
-					return console.error('Error on reset password submission', err);
-				});
-		} catch (err) {
-			setUserLogin({ ...userLogin, errors: [err.message], reset: false });
-			return console.error('Error on reset password submission', err);
-		}
+		dispatch(resetPassword({ email }));
 	};
 
 	const handleChange = (e) => {
@@ -62,10 +76,17 @@ const EmailPw = (props) => {
 
 				{reset && (
 					<Alert headLine="Reset success" state="success">
-						Mot de passe réinitialisé, merci de consulter vos mails pour terminer la démarche.
+						Mot de passe réinitialisé, merci de consulter vos mails pour
+						terminer la démarche.
 					</Alert>
 				)}
-				<FormInput placeholder="Email" type="email" name="email" value={email} onChange={(e) => handleChange(e)} />
+				<FormInput
+					placeholder="Email"
+					type="email"
+					name="email"
+					value={email}
+					onChange={(e) => handleChange(e)}
+				/>
 				<Button type="submit">Confirmer</Button>
 			</form>
 		</AuthWrapper>

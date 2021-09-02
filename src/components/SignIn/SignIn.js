@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 // firebase
-import { signInWithGoogle } from '../../firebase/utils';
+// import { signInWithGoogle } from '../../firebase/utils';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { signInUser } from '../../redux/User/user.actions';
+import {
+	signInUser,
+	signInWithGoogle,
+	resetAllAuthForms,
+} from '../../redux/User/user.actions';
 
 // components
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
@@ -38,6 +42,7 @@ const SignIn = (props) => {
 	useEffect(() => {
 		if (signInSuccess) {
 			resetForm();
+			dispatch(resetAllAuthForms());
 			props.history.push('/');
 		}
 	}, [signInSuccess]);
@@ -48,6 +53,10 @@ const SignIn = (props) => {
 
 	const resetForm = () => {
 		setUserLogin(initialState);
+	};
+
+	const handleGooogleSignIn = () => {
+		dispatch(signInWithGoogle());
 	};
 
 	const handleSubmit = (e) => {
@@ -72,8 +81,20 @@ const SignIn = (props) => {
 							})}
 						</ul>
 					)}
-					<FormInput placeholder="Email" type="email" name="email" value={email} onChange={(e) => handleChange(e)} />
-					<FormInput placeholder="Mot de passe" type="password" name="password" value={password} onChange={(e) => handleChange(e)} />
+					<FormInput
+						placeholder="Email"
+						type="email"
+						name="email"
+						value={email}
+						onChange={(e) => handleChange(e)}
+					/>
+					<FormInput
+						placeholder="Mot de passe"
+						type="password"
+						name="password"
+						value={password}
+						onChange={(e) => handleChange(e)}
+					/>
 					<Button type="submit">Connexion</Button>
 					<p className="pwRecovery">
 						<Link to="/recovery">Mot de passe oublié ?</Link>
@@ -83,7 +104,7 @@ const SignIn = (props) => {
 
 				<div className="socialSignin">
 					<div className="">
-						<FormButtonTier onClick={signInWithGoogle} icon={GoogleIcon}>
+						<FormButtonTier onClick={handleGooogleSignIn} icon={GoogleIcon}>
 							Se connecter avec Google
 						</FormButtonTier>
 					</div>

@@ -27,35 +27,17 @@ const App = (props) => {
 
 	// --- destructuring 'store' from Redux Provider
 	const dispatch = useDispatch();
-	// --- old user state with useState from React
-	// const [currentUser, setCurrentUser] = useState(null);
 
 	/**
 	 * Check if someone is logged and set currentLogged state.
 	 */
-	const authListener = () => {
-		auth.onAuthStateChanged(async (userAuth) => {
-			if (userAuth) {
-				const userRef = await handleUserProfile(userAuth);
-				userRef.onSnapshot((snapshot) => {
-					dispatch(
-						setCurrentUser({
-							id: snapshot.id,
-							...snapshot.data,
-						}),
-					);
-				});
-				return console.log('User log');
-			}
+	// const authListener = () => {
 
-			dispatch(setCurrentUser(userAuth));
-			return console.log('No user logged in');
-		});
-	};
+	// };
 	// ----------- Loop instruction on app initialization.
-	useEffect(() => {
-		authListener();
-	}, []);
+	// useEffect(() => {
+	// 	// authListener();
+	// }, []);
 
 	// ----------- Routing define with layout and page associate.
 	return (

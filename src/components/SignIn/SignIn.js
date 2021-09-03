@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
-// firebase
-// import { signInWithGoogle } from '../../firebase/utils';
-
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	signInUser,
+	emailSignInStart,
 	signInWithGoogle,
-	resetAllAuthForms,
 } from '../../redux/User/user.actions';
 
 // components
@@ -23,7 +18,7 @@ import Button from './../../statics-components/Button/Button';
 import './signIn.scss';
 
 const mapState = ({ user }) => ({
-	signInSuccess: user.signInSuccess,
+	currentUser: user.currentUser,
 });
 
 const SignIn = (props) => {
@@ -34,18 +29,18 @@ const SignIn = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const { signInSuccess } = useSelector(mapState);
+	const { currentUser } = useSelector(mapState);
 
 	const [userLogin, setUserLogin] = useState(initialState);
 	const { email, password, errors } = userLogin;
 
 	useEffect(() => {
-		if (signInSuccess) {
+		if (currentUser) {
 			resetForm();
-			dispatch(resetAllAuthForms());
+			// dispatch(resetAllAuthForms());
 			props.history.push('/');
 		}
-	}, [signInSuccess]);
+	}, [currentUser]);
 
 	const handleChange = (e) => {
 		setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
@@ -62,7 +57,7 @@ const SignIn = (props) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		try {
-			dispatch(signInUser({ email, password }));
+			dispatch(emailSignInStart({ email, password }));
 		} catch (err) {
 			console.error(err);
 			setUserLogin({ ...userLogin, errors: [err.message] });

@@ -11,7 +11,7 @@ import Button from '../../statics-components/Button/Button';
 import './signup.scss';
 
 const mapState = ({ user }) => ({
-	signUpSuccess: user.signUpSuccess,
+	currentUser: user.currentUser,
 	signUpError: user.signUpError,
 });
 
@@ -24,19 +24,19 @@ const SignUp = (props) => {
 		confirmPassword: '',
 		signUpError: [],
 	};
-	const { signUpSuccess, signUpError } = useSelector(mapState);
+	const { currentUser, signUpError } = useSelector(mapState);
 	const [userInformation, setUserInformation] = useState(initialState);
 	const { displayName, email, password, confirmPassword } = userInformation;
 
 	console.log(userInformation);
 
 	useEffect(() => {
-		if (signUpSuccess) {
+		if (currentUser) {
 			setUserInformation(initialState);
 			dispatch(resetAllAuthForms);
 			props.history.push('/');
 		}
-	}, [signUpSuccess]);
+	}, [currentUser]);
 
 	useEffect(() => {
 		if (Array.isArray(signUpError) && signUpError.length > 0) {

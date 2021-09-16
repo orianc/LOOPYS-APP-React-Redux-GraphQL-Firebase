@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	resetPassword,
 	resetAllAuthForms,
+	resetPasswordStart,
+	resetUserState,
 } from '../../redux/User/user.actions';
 
 // components
@@ -19,7 +21,7 @@ import './emailPw.scss';
 
 const mapState = ({ user }) => ({
 	resetPasswordSuccess: user.resetPasswordSuccess,
-	resetPasswordError: user.resetPasswordError,
+	userError: user.userError,
 });
 
 const EmailPw = (props) => {
@@ -30,13 +32,13 @@ const EmailPw = (props) => {
 	};
 	const [userLogin, setUserLogin] = useState(initialState);
 	const { email, errors, reset } = userLogin;
-	const { resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
+	const { resetPasswordSuccess, userError } = useSelector(mapState);
 	const dispatch = useDispatch();
-	console.log(userLogin);
+	// console.log(userLogin);
 
 	useEffect(() => {
 		if (resetPasswordSuccess) {
-			dispatch(resetAllAuthForms);
+			dispatch(resetUserState());
 			setUserLogin({ ...userLogin, errors: [], reset: true });
 			setTimeout(() => {
 				props.history.push('/login');
@@ -45,18 +47,18 @@ const EmailPw = (props) => {
 	}, [resetPasswordSuccess]);
 
 	useEffect(() => {
-		if (Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
+		if (Array.isArray(userError) && userError.length > 0) {
 			setUserLogin({
 				...userLogin,
-				errors: [resetPasswordError],
+				errors: [userError],
 				reset: false,
 			});
 		}
-	}, [resetPasswordError]);
+	}, [userError]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		dispatch(resetPassword({ email }));
+		dispatch(resetPasswordStart({ email }));
 	};
 
 	const handleChange = (e) => {

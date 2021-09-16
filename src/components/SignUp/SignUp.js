@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser, resetAllAuthForms } from '../../redux/User/user.actions';
+import {
+	signUpUserStart,
+	resetAllAuthForms,
+} from '../../redux/User/user.actions';
 // component
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
@@ -12,7 +15,7 @@ import './signup.scss';
 
 const mapState = ({ user }) => ({
 	currentUser: user.currentUser,
-	signUpError: user.signUpError,
+	userError: user.userError,
 });
 
 const SignUp = (props) => {
@@ -22,9 +25,9 @@ const SignUp = (props) => {
 		email: '',
 		password: '',
 		confirmPassword: '',
-		signUpError: [],
+		userError: [],
 	};
-	const { currentUser, signUpError } = useSelector(mapState);
+	const { currentUser, userError } = useSelector(mapState);
 	const [userInformation, setUserInformation] = useState(initialState);
 	const { displayName, email, password, confirmPassword } = userInformation;
 
@@ -33,16 +36,15 @@ const SignUp = (props) => {
 	useEffect(() => {
 		if (currentUser) {
 			setUserInformation(initialState);
-			dispatch(resetAllAuthForms);
 			props.history.push('/');
 		}
 	}, [currentUser]);
 
 	useEffect(() => {
-		if (Array.isArray(signUpError) && signUpError.length > 0) {
-			setUserInformation({ signUpError });
+		if (Array.isArray(userError) && userError.length > 0) {
+			setUserInformation({ ...userInformation, userError });
 		}
-	}, [signUpError]);
+	}, [userError]);
 
 	const handleChangeSetUserInformation = (e) => {
 		setUserInformation({ ...userInformation, [e.target.name]: e.target.value });
@@ -50,9 +52,11 @@ const SignUp = (props) => {
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
+		setUserInformation({ ...userInformation, userError: [] });
+
 		try {
 			dispatch(
-				signUpUser({
+				signUpUserStart({
 					displayName,
 					email,
 					password,
@@ -75,10 +79,10 @@ const SignUp = (props) => {
 	return (
 		<AuthWrapper headLine="Créer un compte">
 			<form className="signUpEmailPw" onSubmit={handleFormSubmit}>
-				{signUpError.length > 0 && (
+				{userError.length > 0 && (
 					<ul className="errors">
 						<h3>Erreur de formulaire</h3>
-						{signUpError.map((err, index) => {
+						{userError.map((err, index) => {
 							return <li key={index}>{err}</li>;
 						})}
 					</ul>

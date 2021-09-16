@@ -2,10 +2,9 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // firebase
-import { auth, handleUserProfile } from './firebase/utils';
 // redux
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { setCurrentUser } from './redux/User/user.actions';
+import { useDispatch } from 'react-redux';
+import { checkUserSession } from './redux/User/user.actions';
 
 // hoc
 import WithAuth from './hoc/withAuth';
@@ -28,16 +27,10 @@ const App = (props) => {
 	// --- destructuring 'store' from Redux Provider
 	const dispatch = useDispatch();
 
-	/**
-	 * Check if someone is logged and set currentLogged state.
-	 */
-	// const authListener = () => {
-
-	// };
 	// ----------- Loop instruction on app initialization.
-	// useEffect(() => {
-	// 	// authListener();
-	// }, []);
+	useEffect(() => {
+		dispatch(checkUserSession());
+	}, []);
 
 	// ----------- Routing define with layout and page associate.
 	return (

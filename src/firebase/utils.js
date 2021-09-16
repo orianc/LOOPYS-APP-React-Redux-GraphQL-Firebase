@@ -32,9 +32,18 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
 				...additionalData,
 			});
 		} catch (error) {
-			console.error(error);
+			console.error('error on create user', error);
 		}
 	}
-	console.log(userRef, 1);
+	console.log('userRef from firebase, handleUserProfile', userRef, 1);
 	return userRef;
+};
+
+export const getCurrentUser = () => {
+	return new Promise((resolve, rejects) => {
+		const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+			unsubscribe();
+			resolve(userAuth);
+		}, rejects);
+	});
 };

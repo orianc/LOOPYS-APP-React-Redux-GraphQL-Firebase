@@ -36,7 +36,8 @@ const SignIn = (props) => {
 
 	useEffect(() => {
 		if (currentUser) {
-			resetForm();
+			console.log(currentUser);
+			// resetForm();
 			// dispatch(resetAllAuthForms());
 			props.history.push('/');
 		}

@@ -19,6 +19,7 @@ import './signIn.scss';
 
 const mapState = ({ user }) => ({
 	currentUser: user.currentUser,
+	userError: user.userError,
 });
 
 const SignIn = (props) => {
@@ -30,10 +31,10 @@ const SignIn = (props) => {
 
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { currentUser } = useSelector(mapState);
+	const { currentUser, userError } = useSelector(mapState);
 
 	const [userLogin, setUserLogin] = useState(initialState);
-	const { email, password, errors } = userLogin;
+	const { email, password } = userLogin;
 
 	useEffect(() => {
 		if (currentUser) {
@@ -56,7 +57,6 @@ const SignIn = (props) => {
 			dispatch(emailSignInStart({ email, password }));
 		} catch (err) {
 			console.error(err);
-			setUserLogin({ ...userLogin, errors: [err.message] });
 		}
 	};
 
@@ -64,10 +64,10 @@ const SignIn = (props) => {
 		<AuthWrapper headLine="Connexion">
 			<form onSubmit={(e) => handleSubmit(e)} className="signIn">
 				<div className="emailPwSignIn">
-					{errors.length > 0 && (
+					{userError.length > 0 && (
 						<ul className="errors">
 							<h3>Erreur de formulaire</h3>
-							{errors.map((err, index) => {
+							{userError.map((err, index) => {
 								return <li key={index}>{err}</li>;
 							})}
 						</ul>

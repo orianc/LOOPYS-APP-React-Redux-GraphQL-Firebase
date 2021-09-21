@@ -43,7 +43,9 @@ export function* emailSignIn({ payload: { email, password } }) {
 		console.log('in saga, emailSignIn', user);
 		yield getSnapshotFromUserAuth(user);
 	} catch (err) {
-		console.error('Error on submit login form', err);
+		const error = [err.message];
+		yield put(userError(error));
+		console.error('Error on submit login form', error);
 	}
 }
 
@@ -93,7 +95,7 @@ export function* signUpUser({
 	}
 	try {
 		const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-		const { additionalData } = displayName;
+		const additionalData = { displayName };
 		yield getSnapshotFromUserAuth(user, additionalData);
 	} catch (err) {
 		yield put(userError([err.message]));

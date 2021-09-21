@@ -8,7 +8,7 @@ import { checkUserSession } from './redux/User/user.actions';
 
 // hoc
 import WithAuth from './hoc/withAuth';
-
+import WithAdminAuth from './hoc/withAdminAuth';
 // layout
 import MainLayout from './layout/MainLayout';
 import FeatureLayout from './layout/FeatureLayout';
@@ -20,6 +20,9 @@ import NewAds from './pages/NewAdsPage/NewAdsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
+import AdminPage from './pages/AdminPage/AdminPage';
+// components
+import AdminToolBar from './components/AdminToolBar/AdminToolBar';
 
 const App = (props) => {
 	// console.log('props App : ', props);
@@ -35,6 +38,7 @@ const App = (props) => {
 	// ----------- Routing define with layout and page associate.
 	return (
 		<div className="App">
+			<AdminToolBar />
 			<Switch>
 				<Route
 					exact
@@ -79,6 +83,16 @@ const App = (props) => {
 						<FeatureLayout featureName="Récupération de mot de passe">
 							<RecoveryPage />
 						</FeatureLayout>
+					)}
+				/>
+				<Route
+					path="/admin"
+					render={() => (
+						<WithAdminAuth>
+							<FeatureLayout featureName="Admin Dashboard">
+								<AdminPage />
+							</FeatureLayout>
+						</WithAdminAuth>
 					)}
 				/>
 

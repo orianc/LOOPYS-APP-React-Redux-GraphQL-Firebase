@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
-
+import { useHistory } from 'react-router';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	resetPassword,
-	resetAllAuthForms,
 	resetPasswordStart,
 	resetUserState,
 } from '../../redux/User/user.actions';
@@ -25,6 +23,8 @@ const mapState = ({ user }) => ({
 });
 
 const EmailPw = (props) => {
+	const dispatch = useDispatch();
+	const history = useHistory();
 	const initialState = {
 		email: '',
 		errors: [],
@@ -33,7 +33,6 @@ const EmailPw = (props) => {
 	const [userLogin, setUserLogin] = useState(initialState);
 	const { email, errors, reset } = userLogin;
 	const { resetPasswordSuccess, userError } = useSelector(mapState);
-	const dispatch = useDispatch();
 	// console.log(userLogin);
 
 	useEffect(() => {
@@ -41,7 +40,7 @@ const EmailPw = (props) => {
 			dispatch(resetUserState());
 			setUserLogin({ ...userLogin, errors: [], reset: true });
 			setTimeout(() => {
-				props.history.push('/login');
+				history.push('/login');
 			}, 3500);
 		}
 	}, [resetPasswordSuccess]);
@@ -95,4 +94,4 @@ const EmailPw = (props) => {
 	);
 };
 
-export default withRouter(EmailPw);
+export default EmailPw;

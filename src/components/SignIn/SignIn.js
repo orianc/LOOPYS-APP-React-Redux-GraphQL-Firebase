@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	emailSignInStart,
-	signInWithGoogle,
+	googleSignInStart,
 } from '../../redux/User/user.actions';
 
 // components
@@ -29,6 +29,7 @@ const SignIn = (props) => {
 	};
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { currentUser } = useSelector(mapState);
 
 	const [userLogin, setUserLogin] = useState(initialState);
@@ -37,9 +38,7 @@ const SignIn = (props) => {
 	useEffect(() => {
 		if (currentUser) {
 			console.log(currentUser);
-			// resetForm();
-			// dispatch(resetAllAuthForms());
-			props.history.push('/');
+			history.push('/');
 		}
 	}, [currentUser]);
 
@@ -47,12 +46,8 @@ const SignIn = (props) => {
 		setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
 	};
 
-	const resetForm = () => {
-		setUserLogin(initialState);
-	};
-
 	const handleGooogleSignIn = () => {
-		dispatch(signInWithGoogle());
+		dispatch(googleSignInStart());
 	};
 
 	const handleSubmit = (e) => {
@@ -97,17 +92,16 @@ const SignIn = (props) => {
 					</p>
 				</div>
 				<div className="separator"></div>
-
-				<div className="socialSignin">
-					<div className="">
-						<FormButtonTier onClick={handleGooogleSignIn} icon={GoogleIcon}>
-							Se connecter avec Google
-						</FormButtonTier>
-					</div>
-				</div>
 			</form>
+			<div className="socialSignin">
+				<div className="">
+					<FormButtonTier onClick={handleGooogleSignIn} icon={GoogleIcon}>
+						Se connecter avec Google
+					</FormButtonTier>
+				</div>
+			</div>
 		</AuthWrapper>
 	);
 };
 
-export default withRouter(SignIn);
+export default SignIn;

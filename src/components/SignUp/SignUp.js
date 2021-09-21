@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	signUpUserStart,
-	resetAllAuthForms,
-} from '../../redux/User/user.actions';
+import { signUpUserStart } from '../../redux/User/user.actions';
 // component
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
@@ -20,6 +17,7 @@ const mapState = ({ user }) => ({
 
 const SignUp = (props) => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const initialState = {
 		displayName: '',
 		email: '',
@@ -36,7 +34,7 @@ const SignUp = (props) => {
 	useEffect(() => {
 		if (currentUser) {
 			setUserInformation(initialState);
-			props.history.push('/');
+			history.push('/');
 		}
 	}, [currentUser]);
 
@@ -129,4 +127,4 @@ const SignUp = (props) => {
 	);
 };
 
-export default withRouter(SignUp);
+export default SignUp;

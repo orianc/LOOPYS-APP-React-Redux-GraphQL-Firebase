@@ -62,7 +62,7 @@ const App = (props) => {
 					path="/dashboard"
 					render={() => (
 						<WithAuth>
-							<FeatureLayout featureName="Dashboard">
+							<FeatureLayout featureName="Mon profil">
 								<DashboardPage />
 							</FeatureLayout>
 						</WithAuth>
@@ -71,7 +71,7 @@ const App = (props) => {
 				<Route
 					path="/new-ads"
 					render={() => (
-						<FeatureLayout featureName="New Ads">
+						<FeatureLayout featureName="Ajouter une annonce">
 							<NewAds />
 						</FeatureLayout>
 					)}

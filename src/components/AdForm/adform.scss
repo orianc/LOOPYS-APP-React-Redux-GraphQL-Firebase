@@ -1,0 +1,81 @@
+.adForm {
+	align-items: flex-start;
+	.charactCounter {
+		font-size: 00.8rem;
+	}
+
+	.policy {
+		width: 70%;
+		font-size: 0.8rem;
+		text-align: center;
+		align-self: center;
+	}
+	.textAreaWrap {
+		textarea {
+			border: none;
+			border-bottom: 1px solid var(--main-black);
+			padding: 1rem 1rem;
+			margin: 1rem 0;
+			font-size: 1rem;
+			width: 100%;
+			resize: vertical;
+			font-family: sans-serif;
+		}
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: end;
+	}
+
+	.checkboxWrap {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		label {
+			font-size: 1.1rem;
+		}
+		input[type='checkbox'] {
+			height: 2rem;
+			width: 2rem;
+			border-color: black;
+			margin: 1rem;
+		}
+		.formRow {
+			display: flex;
+			align-items: center;
+		}
+	}
+	.formRow {
+		margin: auto 0px;
+		width: 100%;
+		input[type='text'],
+		input[type='file'] {
+			width: 100%;
+		}
+
+		input[type='number'] {
+			width: 80%;
+		}
+	}
+	.loopysValue {
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+	.rules {
+		display: flex;
+		input {
+			width: auto;
+		}
+		p {
+			color: crimson;
+			font-weight: 600;
+			font-size: 1rem;
+			margin: auto auto auto 10px;
+			display: inline-block;
+			a {
+				color: dodgerblue;
+			}
+		}
+	}
+}

@@ -1,12 +1,24 @@
 import React from 'react';
 import './formInput.scss';
 
-const FormInput = ({ handleChange, label, ...otherProps }) => {
+const FormInput = ({
+	children,
+	handleChange,
+	label,
+	name,
+	otherClass,
+	...otherProps
+}) => {
 	return (
-		<div className="formRow">
-			{label && <label>{label}</label>}
-
-			<input className="formInput" onChange={handleChange} {...otherProps} />
+		<div className={`formRow ${otherClass ? otherClass : ''}`}>
+			{label && <label for={name ? name : null}>{label}</label>}
+			<input
+				name={name ? name : null}
+				className="formInput"
+				onChange={handleChange}
+				{...otherProps}
+			/>
+			{children}
 		</div>
 	);
 };

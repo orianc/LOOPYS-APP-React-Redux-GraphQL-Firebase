@@ -2,7 +2,7 @@ import React from 'react';
 import AdForm from '../../components/AdForm/AdForm';
 import './newAds.scss';
 
-const newAds = (props) => {
+const NewAdsPage = (props) => {
 	return (
 		<div className="newsAdsPage">
 			<AdForm />
@@ -10,4 +10,4 @@ const newAds = (props) => {
 	);
 };
 
-export default newAds;
+export default NewAdsPage;

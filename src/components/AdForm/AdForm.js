@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+// redux
+import { addItemStart } from '../../redux/Items/items.actions';
+import { useDispatch, useSelector } from 'react-redux';
 // component
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import Button from '../../statics-components/Button/Button';
-
+// assets and style
 import SpinMoneyTitle from '../../assets/spin-money-title.svg';
 import './adform.scss';
 
-const initialState = {
-	name: '',
-	photos: [],
-	resume: '',
-	send: false,
-	withdrawal: false,
-	loopysValue: 0,
-	rule1: false,
-	rule2: false,
-};
+const mapState = ({ user }) => ({
+	currentUser: user.currentUser,
+});
 
 const AdForm = (props) => {
+	const dispatch = useDispatch();
+	const { currentUser } = useSelector(mapState);
+
+	const timestamp = new Date();
+	const initialState = {
+		id: Math.round(Math.random() * 10000000000),
+		name: '',
+		photos: [],
+		resume: '',
+		send: false,
+		withdrawal: false,
+		loopysValue: 0,
+		rule1: false,
+		rule2: false,
+		verified: false,
+		authorId: currentUser.id,
+		createAt: timestamp,
+	};
+
 	const [Item, setItem] = useState(initialState);
 	const [charactCount, SetcharactCount] = useState(0);
 
@@ -27,24 +42,31 @@ const AdForm = (props) => {
 		setItem({ ...Item, [e.target.name]: e.target.value });
 	};
 
-	const checked = (e) => {
-		console.log(Item.[e.target.name]);
-		setItem({ ...Item, [e.target.name]: !Item.[e.target.name] });
+	const checkIt = (e) => {
+		const targetField = e.target.name;
+		setItem({ ...Item, [targetField]: !Item[targetField] });
 	};
 
-  const maxFile = ()=>{
-    if (Item.photos.length > 5) {
-      return true
-    }
-    return false
-  }
+	const maxFile = () => {
+		if (Item.photos.length > 5) {
+			return true;
+		}
+		return false;
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		dispatch(addItemStart(Item));
+	};
+
 	console.log(Item);
 	return (
 		<AuthWrapper headLine="Publier une annonce">
-			<form className="adForm">
+			<form className="adForm" onSubmit={handleSubmit}>
 				<FormInput
 					onChange={(e) => handleChange(e)}
-					autofocus
+					autoFocus
 					name="name"
 					maxLength="60"
 					placeholder="Nom de l'item"
@@ -52,17 +74,21 @@ const AdForm = (props) => {
 					required
 				/>
 				<FormInput
-					onChange={(e) => setItem({...Item, photos: e.target.files})}
+					onChange={(e) => setItem({ ...Item, photos: e.target.files })}
 					name="photos"
 					type="file"
-          style={{color:(maxFile() ? 'crimson' : null)}}
+					style={{ color: maxFile() ? 'crimson' : null }}
 					multiple
 					capture
 					accept="image/*"
 				/>
-        {maxFile() &&
-        <span style={{fontSize: '0.8rem', alignSelf:'end', color:'crimson'}}>Maximum de photos : 5</span>
-        }
+				{maxFile() && (
+					<span
+						style={{ fontSize: '0.8rem', alignSelf: 'end', color: 'crimson' }}
+					>
+						Maximum de photos : 5
+					</span>
+				)}
 				<div className="textAreaWrap">
 					<textarea
 						maxLength="1000"
@@ -87,13 +113,13 @@ const AdForm = (props) => {
 				</div>
 				<div className="checkboxWrap">
 					<FormInput
-						onChange={(e) => checked(e)}
+						onChange={(e) => checkIt(e)}
 						type="checkbox"
 						name="send"
 						label="Envois"
 					/>
 					<FormInput
-						onChange={(e) => checked(e)}
+						onChange={(e) => checkIt(e)}
 						type="checkbox"
 						name="withdrawal"
 						label="Retrait"
@@ -103,17 +129,19 @@ const AdForm = (props) => {
 				<FormInput
 					onChange={(e) => handleChange(e)}
 					placeholder="ex : 200"
+					name="loopysValue"
 					type="number"
 					otherClass="loopysValue"
+					required
 				>
-					<img src={SpinMoneyTitle} alt='' style={{ height: 35 }} />
+					<img src={SpinMoneyTitle} alt="" style={{ height: 35 }} />
 				</FormInput>
 				<FormInput
 					otherClass="rules"
 					placeholder="Loopys"
 					type="radio"
 					name="rule1"
-					onChange={(e) => checked(e)}
+					onChange={(e) => checkIt(e)}
 					required
 				>
 					<p>
@@ -123,7 +151,7 @@ const AdForm = (props) => {
 				<FormInput
 					otherClass="rules"
 					required
-					onChange={(e) => checked(e)}
+					onChange={(e) => checkIt(e)}
 					name="rule2"
 					placeholder="Loopys"
 					type="radio"

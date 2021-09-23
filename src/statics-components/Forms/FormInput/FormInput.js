@@ -11,7 +11,7 @@ const FormInput = ({
 }) => {
 	return (
 		<div className={`formRow ${otherClass ? otherClass : ''}`}>
-			{label && <label for={name ? name : null}>{label}</label>}
+			{label && <label htmlFor={name ? name : null}>{label}</label>}
 			<input
 				name={name ? name : null}
 				className="formInput"

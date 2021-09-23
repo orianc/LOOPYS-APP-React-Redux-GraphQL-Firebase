@@ -16,7 +16,7 @@ import './default.scss';
 // pages
 import Homepage from './pages/HomePage/HomePage';
 import AuthPage from './pages/AuthPage/AuthPage';
-import NewAds from './pages/NewAdsPage/NewAdsPage';
+import NewAdsPage from './pages/NewAdsPage/NewAdsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
@@ -71,9 +71,11 @@ const App = (props) => {
 				<Route
 					path="/new-ads"
 					render={() => (
-						<FeatureLayout featureName="Ajouter une annonce">
-							<NewAds />
-						</FeatureLayout>
+						<WithAuth>
+							<FeatureLayout featureName="Ajouter une annonce">
+								<NewAdsPage />
+							</FeatureLayout>
+						</WithAuth>
 					)}
 				/>
 

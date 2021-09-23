@@ -29,7 +29,7 @@
 
 	.checkboxWrap {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		width: 100%;
 		label {
 			font-size: 1.1rem;
@@ -42,6 +42,7 @@
 		}
 		.formRow {
 			display: flex;
+			justify-content: center;
 			align-items: center;
 		}
 	}

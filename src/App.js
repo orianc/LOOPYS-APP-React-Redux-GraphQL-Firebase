@@ -23,6 +23,7 @@ import DashboardPage from './pages/DashboardPage/DashboardPage';
 import AdminPage from './pages/AdminPage/AdminPage';
 // components
 import AdminToolBar from './components/AdminToolBar/AdminToolBar';
+import ItemPage from './pages/ItemPage/ItemPage';
 
 const App = (props) => {
 	// console.log('props App : ', props);
@@ -55,6 +56,15 @@ const App = (props) => {
 					render={() => (
 						<FeatureLayout featureName="Authentification">
 							<AuthPage />
+						</FeatureLayout>
+					)}
+				/>
+				<Route
+					exact
+					path={`/item`}
+					render={() => (
+						<FeatureLayout featureName="Item">
+							<ItemPage />
 						</FeatureLayout>
 					)}
 				/>

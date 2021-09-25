@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 // redux
 import { addItemStart } from '../../redux/Items/items.actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +19,7 @@ const mapState = ({ user }) => ({
 const AdForm = (props) => {
 	const dispatch = useDispatch();
 	const { currentUser } = useSelector(mapState);
-
+	const history = useHistory();
 	const timestamp = new Date();
 	const initialState = {
 		id: Math.round(Math.random() * 10000000000),
@@ -33,8 +34,9 @@ const AdForm = (props) => {
 		verified: false,
 		authorId: currentUser.id,
 		createAt: timestamp,
+		state: 'open',
 	};
-
+	// state : open, pending, close
 	const [Item, setItem] = useState(initialState);
 	const [charactCount, SetcharactCount] = useState(0);
 
@@ -54,13 +56,18 @@ const AdForm = (props) => {
 		return false;
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		dispatch(addItemStart(Item));
+	const resetForm = () => {
+		setItem(initialState);
 	};
 
-	console.log(Item);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		dispatch(addItemStart(Item));
+		resetForm();
+		history.push('/');
+	};
+
+	// console.log(Item);
 	return (
 		<AuthWrapper headLine="Publier une annonce">
 			<form className="adForm" onSubmit={handleSubmit}>

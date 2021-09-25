@@ -1,5 +1,8 @@
 const itemsTypes = {
 	ADD_NEW_ITEM_START: 'ADD_NEW_ITEM_START',
+	FETCH_ITEMS_START: 'FETCH_ITEMS_START',
+	SET_ITEMS: 'SET_ITEMS',
+	DELETE_ITEM_START: 'DELETE_ITEM_START',
 };
 
 export default itemsTypes;

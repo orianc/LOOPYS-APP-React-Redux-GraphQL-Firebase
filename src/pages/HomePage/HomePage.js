@@ -4,7 +4,7 @@ import './homepage.scss';
 
 const Homepage = (props) => {
 	return (
-		<section className="homepage.scss">
+		<section className="homepage">
 			<Directory />
 		</section>
 	);

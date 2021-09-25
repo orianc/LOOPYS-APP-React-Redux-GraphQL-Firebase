@@ -1,0 +1,12 @@
+.itemCard {
+	margin: 1rem;
+	background-color: white;
+	border-radius: 5px;
+	padding: 2rem;
+	transition: all 0.4s ease-in-out;
+	cursor: pointer;
+	&:hover {
+		background-color: var(--main-grey);
+		transition: all 0.4s ease-in-out;
+	}
+}

@@ -70,3 +70,14 @@ export const handleDeleteItem = (itemId) => {
 			.catch((err) => reject(err));
 	});
 };
+
+export const handleValidItem = (documentId) => {
+	return new Promise((resolve, reject) => {
+		firestore
+			.collection('items')
+			.doc(documentId)
+			.update({ verified: true })
+			.then(() => resolve())
+			.catch((err) => reject(err));
+	});
+};

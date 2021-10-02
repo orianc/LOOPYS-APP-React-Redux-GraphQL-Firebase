@@ -14,6 +14,11 @@ export const setItems = (items) => ({
 	payload: items,
 });
 
+export const validItem = (itemId) => ({
+	type: itemsTypes.VALIDATION_ITEM_START,
+	payload: itemId,
+});
+
 export const deleteItemStart = (itemId) => ({
 	type: itemsTypes.DELETE_ITEM_START,
 	payload: itemId,

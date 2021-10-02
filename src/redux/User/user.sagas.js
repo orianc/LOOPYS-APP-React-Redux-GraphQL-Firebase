@@ -40,7 +40,7 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
 export function* emailSignIn({ payload: { email, password } }) {
 	try {
 		const { user } = yield auth.signInWithEmailAndPassword(email, password);
-		console.log('in saga, emailSignIn', user);
+		// console.log('in saga, emailSignIn', user);
 		yield getSnapshotFromUserAuth(user);
 	} catch (err) {
 		const error = [err.message];

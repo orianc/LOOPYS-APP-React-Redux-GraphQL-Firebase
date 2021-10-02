@@ -29,7 +29,7 @@ const SignUp = (props) => {
 	const [userInformation, setUserInformation] = useState(initialState);
 	const { displayName, email, password, confirmPassword } = userInformation;
 
-	console.log(userInformation);
+	// console.log(userInformation);
 
 	useEffect(() => {
 		if (currentUser) {

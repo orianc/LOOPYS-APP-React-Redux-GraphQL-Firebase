@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsStart } from '../../redux/Items/items.actions';
 import ItemCard from '../ItemCard/ItemCard';
-import './directory.scss';
+import './items.scss';
 
 const mapState = ({ items }) => ({
 	itemsData: items.items,
 });
 
-const Directory = (props) => {
+const Items = (props) => {
 	const dispatch = useDispatch();
 	const { itemsData } = useSelector(mapState);
 	console.log(itemsData);
@@ -21,13 +21,16 @@ const Directory = (props) => {
 	return (
 		<div>
 			<div className="itemsWrapper">
-				{itemsData.length > 0 &&
+				{itemsData.length > 0 ? (
 					itemsData.map((item, index) => (
-						<ItemCard item={item} index={index} />
-					))}
+						<>{item.verified && <ItemCard item={item} index={index} />}</>
+					))
+				) : (
+					<p>Loading..</p>
+				)}
 			</div>
 		</div>
 	);
 };
 
-export default Directory;
+export default Items;

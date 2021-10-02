@@ -38,7 +38,7 @@ const SignIn = (props) => {
 
 	useEffect(() => {
 		if (currentUser) {
-			console.log(currentUser);
+			// console.log(currentUser);
 			history.push('/');
 		}
 	}, [currentUser]);

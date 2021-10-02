@@ -7,6 +7,7 @@ import {
 	handleFetchItems,
 	handleFetchPhotos,
 	handleDeleteItem,
+	handleValidItem,
 } from './items.helpers';
 
 export function* addItem({
@@ -80,10 +81,24 @@ export function* onDeleteItemStart() {
 	yield takeLatest(itemsTypes.DELETE_ITEM_START, deleteItem);
 }
 
+export function* validItem({ payload }) {
+	try {
+		yield handleValidItem(payload);
+		yield put(fetchItemsStart());
+	} catch (err) {
+		console.error(err);
+	}
+}
+
+export function* onValidationItemStart() {
+	yield takeLatest(itemsTypes.VALIDATION_ITEM_START, validItem);
+}
+
 export default function* itemsSagas() {
 	yield all([
 		call(onAddItemStart),
 		call(onFetchItemsStart),
 		call(onDeleteItemStart),
+		call(onValidationItemStart),
 	]);
 }

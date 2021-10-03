@@ -21,6 +21,7 @@ import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import AdminPage from './pages/AdminPage/AdminPage';
+import SearchPage from './pages/SearchPage/SearchPage';
 // components
 import AdminToolBar from './components/AdminToolBar/AdminToolBar';
 import ItemPage from './pages/ItemPage/ItemPage';
@@ -113,6 +114,15 @@ const App = (props) => {
 					render={() => (
 						<FeatureLayout featureName="Terms of Services and Privacy">
 							<PrivacyPage />
+						</FeatureLayout>
+					)}
+				/>
+
+				<Route
+					path="/search"
+					render={() => (
+						<FeatureLayout featureName="Rechercher">
+							<SearchPage />
 						</FeatureLayout>
 					)}
 				/>

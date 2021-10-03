@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import Button from '../../statics-components/Button/Button';
+import Alert from '../Alert/Alert';
 // assets and style
 import SpinMoneyTitle from '../../assets/spin-money-title.svg';
 import './adform.scss';
@@ -39,6 +40,7 @@ const AdForm = (props) => {
 	// state : open, pending, close
 	const [Item, setItem] = useState(initialState);
 	const [charactCount, SetcharactCount] = useState(0);
+	const [displayAlert, setDisplayAlert] = useState('none');
 
 	const handleChange = (e) => {
 		setItem({ ...Item, [e.target.name]: e.target.value });
@@ -60,16 +62,26 @@ const AdForm = (props) => {
 		setItem(initialState);
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		dispatch(addItemStart(Item));
-		resetForm();
-		history.push('/');
+	const handleSubmit = async (e) => {
+		if (Item.send || Item.withdrawal) {
+			e.preventDefault();
+			await dispatch(addItemStart(Item));
+			resetForm();
+			return history.push('/');
+		}
+		await setDisplayAlert('block');
+		return history.push('/new-ads');
 	};
 
 	// console.log(Item);
 	return (
 		<AuthWrapper headLine="Publier une annonce">
+			<div style={{ display: displayAlert }}>
+				<Alert headLine={'Oups...'} state={'error'}>
+					{' '}
+					Vous devez choisir au moins une méthode de délivrance...{' '}
+				</Alert>
+			</div>
 			<form className="adForm" onSubmit={handleSubmit}>
 				<FormInput
 					onChange={(e) => handleChange(e)}

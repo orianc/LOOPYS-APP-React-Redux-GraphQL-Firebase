@@ -17,13 +17,20 @@ const Items = (props) => {
 		dispatch(fetchItemsStart());
 	}, []);
 	// empty array is to only run on the first time
-
+	if (!Array.isArray(itemsData)) return null;
+	if (itemsData.length < 1) {
+		return (
+			<div>
+				<p>Loading...</p>
+			</div>
+		);
+	}
 	return (
 		<div>
 			<div className="itemsWrapper">
 				{itemsData.length > 0 ? (
-					itemsData.map((item, index) => (
-						<>{item.verified && <ItemCard item={item} index={index} />}</>
+					itemsData.map((item, pos) => (
+						<>{item.verified && <ItemCard item={item} index={pos} />}</>
 					))
 				) : (
 					<p>Loading..</p>

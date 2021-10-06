@@ -36,6 +36,7 @@ const AdForm = (props) => {
 		authorId: currentUser.id,
 		createAt: timestamp,
 		state: 'open',
+		keyWords: [],
 	};
 	// state : open, pending, close
 	const [Item, setItem] = useState(initialState);
@@ -64,10 +65,12 @@ const AdForm = (props) => {
 
 	const handleSubmit = async (e) => {
 		if (Item.send || Item.withdrawal) {
+			Item.keyWords = Item.name.toLowerCase().split(' ');
+
 			e.preventDefault();
 			await dispatch(addItemStart(Item));
 			resetForm();
-			return history.push('/');
+			return history.push('/search');
 		}
 		await setDisplayAlert('block');
 		return history.push('/new-ads');

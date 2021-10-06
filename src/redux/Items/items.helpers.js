@@ -31,10 +31,16 @@ export const handleAddImage = async (blob, docId) => {
 	});
 };
 
-export const handleFetchItems = () => {
+export const handleFetchItems = ({ filterType }) => {
 	return new Promise((resolve, reject) => {
-		firestore
-			.collection('items')
+		let ref = firestore.collection('items');
+
+		if (filterType) {
+			ref = ref.where('keyWords', 'array-contains', filterType);
+		} else {
+			ref = ref.orderBy('createAt');
+		}
+		ref
 			.get()
 			.then((snapshot) => {
 				const itemsArray = snapshot.docs.map((doc) => {

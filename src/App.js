@@ -62,7 +62,24 @@ const App = (props) => {
 				/>
 				<Route
 					exact
-					path={`/item`}
+					path="/search"
+					render={() => (
+						<MainLayout>
+							<SearchPage />
+						</MainLayout>
+					)}
+				/>
+				<Route
+					path="/search/:filterType"
+					render={() => (
+						<MainLayout>
+							<SearchPage />
+						</MainLayout>
+					)}
+				/>
+				<Route
+					exact
+					path={'/item'}
 					render={() => (
 						<FeatureLayout featureName="Item">
 							<ItemPage />
@@ -114,15 +131,6 @@ const App = (props) => {
 					render={() => (
 						<FeatureLayout featureName="Terms of Services and Privacy">
 							<PrivacyPage />
-						</FeatureLayout>
-					)}
-				/>
-
-				<Route
-					path="/search"
-					render={() => (
-						<FeatureLayout featureName="Rechercher">
-							<SearchPage />
 						</FeatureLayout>
 					)}
 				/>

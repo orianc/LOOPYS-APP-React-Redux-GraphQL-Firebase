@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 // firebase
-import firebase from 'firebase/app';
-
 import { firestore } from '../../firebase/utils';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -41,7 +39,10 @@ const ItemCard = (props) => {
 		getAuthorName(author);
 	}, []);
 
-	console.log('author: ', author);
+	const configAddToCard = {
+		type: 'button',
+	};
+
 	return (
 		<>
 			{item.documentId ? (
@@ -53,7 +54,7 @@ const ItemCard = (props) => {
 								src={
 									'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
 								}
-								alt="item"
+								alt={item.name}
 							/>
 						</div>
 						{/* <p>{item.createAt.toString()}</p> */}
@@ -134,7 +135,7 @@ const ItemCard = (props) => {
 							de : {author.displayName && author.displayName}
 						</p>
 
-						<Button> See more </Button>
+						<Button {...configAddToCard}>Ask for it</Button>
 
 						{currentUser &&
 						(currentUser.id === item.authorId ||

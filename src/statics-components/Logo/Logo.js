@@ -3,11 +3,13 @@ import './logo.scss';
 
 import Spin from '../../assets/spin.svg';
 
-const Logo = (props) => {
+const Logo = ({ logoSize = '28px', fontSize = '' }) => {
 	return (
 		<div className="logo">
-			<img src={Spin} alt="logo-spin" height="28px" />
-			<h2 className="logo-text">Loopys</h2>
+			<img src={Spin} alt="logo-spin" height={logoSize} />
+			<h2 className="logo-text" style={{ fontSize: fontSize }}>
+				Loopys
+			</h2>
 		</div>
 	);
 };

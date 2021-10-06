@@ -23,10 +23,10 @@ export function* addItem({
 		withdrawal,
 		verified,
 		state,
+		keyWords,
 	},
 }) {
 	try {
-		yield console.log('in addItem saga');
 		yield handleAddItem({
 			id,
 			authorId,
@@ -38,6 +38,7 @@ export function* addItem({
 			withdrawal,
 			verified,
 			state,
+			keyWords,
 		}).then(() => handleAddImage(photos, id));
 	} catch (err) {
 		yield console.error('on add item saga', err);
@@ -48,9 +49,10 @@ export function* onAddItemStart() {
 	yield takeLatest(itemsTypes.ADD_NEW_ITEM_START, addItem);
 }
 
-export function* fetchItems() {
+export function* fetchItems({ payload: { filterType } }) {
 	try {
-		const items = yield handleFetchItems();
+		const items = yield handleFetchItems({ filterType });
+		yield put(setItems(items));
 		// const itemsFullData = [];
 		// yield items.map((item) => {
 		// 	var imageUrl = handleFetchPhotos(item.id);
@@ -58,7 +60,6 @@ export function* fetchItems() {
 		// 	return itemsFullData.push(item);
 		// });
 		// yield console.log('item fulldata = ', itemsFullData);
-		yield put(setItems(items));
 	} catch (err) {
 		// console.error(err);
 	}

@@ -5,8 +5,9 @@ export const addItemStart = (itemData) => ({
 	payload: itemData,
 });
 
-export const fetchItemsStart = () => ({
+export const fetchItemsStart = (filters = {}) => ({
 	type: itemsTypes.FETCH_ITEMS_START,
+	payload: filters,
 });
 
 export const setItems = (items) => ({

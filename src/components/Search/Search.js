@@ -1,36 +1,34 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchItemsStart } from '../../redux/Items/items.actions';
+import React from 'react';
 import './search.scss';
 
-import FormInput from '../../statics-components/Forms/FormInput/FormInput';
-const mapState = ({ items }) => ({
-	items: items.items,
-});
-
-const Search = (props) => {
-	const { items } = useSelector(mapState);
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(fetchItemsStart());
-	}, []);
-
-	if (!Array.isArray(items)) return null;
-	if (items.length < 1) {
-		return (
-			<div>
-				<p>Loading...</p>
-			</div>
-		);
-	}
+const SearchInput = ({
+	options,
+	defaultValue,
+	handleChange,
+	label,
+	...otherProps
+}) => {
+	console.log();
 	return (
-		<div>
-			<h1>Search Component</h1>
-			<FormInput />
-			{items.length > 0 &&
-				items.map((item, index) => <p key={index}> {item.name} </p>)}
+		<div className="search">
+			<h3>Recherche :</h3>
+			<div className="searchInputWrap">
+				{label && <label>{label}</label>}
+				<input
+					className="searchInput"
+					onChange={handleChange}
+					{...otherProps}
+				/>
+				{/* 
+
+Les futurs filtres possibles :
+ méthode de retrait, jauge de valeur Loopys, date de création
+				<input type="checkbox" label="Retrait sur place" />
+				<input type="checkbox" label="Envois" /> 				
+				*/}
+			</div>
 		</div>
 	);
 };
 
-export default Search;
+export default SearchInput;

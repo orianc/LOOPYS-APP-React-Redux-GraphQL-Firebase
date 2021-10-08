@@ -122,8 +122,12 @@ const ItemCard = (props) => {
 										</svg>
 									))}
 							</span>
-							{displayResume || displayItemPage ? <p>{item.resume}</p> : null}
+							{/* previously render resume <p>{item.resume}</p>  */}
+							{displayResume || displayItemPage ? (
+								<span dangerouslySetInnerHTML={{ __html: item.resume }} />
+							) : null}
 						</div>
+
 						<div className="itemGlobalInfo">
 							{item.send && (
 								<div>

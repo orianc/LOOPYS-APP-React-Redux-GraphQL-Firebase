@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import { addItemStart } from '../../redux/Items/items.actions';
 import { useDispatch, useSelector } from 'react-redux';
 // component
+import { CKEditor } from 'ckeditor4-react';
 import FormInput from '../../statics-components/Forms/FormInput/FormInput';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import Button from '../../statics-components/Button/Button';
@@ -40,7 +41,7 @@ const AdForm = (props) => {
 	};
 	// state : open, pending, close
 	const [Item, setItem] = useState(initialState);
-	const [charactCount, SetcharactCount] = useState(0);
+	const [charactCount, SetCharacterCount] = useState(0);
 	const [displayAlert, setDisplayAlert] = useState('none');
 
 	const handleChange = (e) => {
@@ -76,7 +77,7 @@ const AdForm = (props) => {
 		return history.push('/new-ads');
 	};
 
-	// console.log(Item);
+	console.log(Item);
 	return (
 		<AuthWrapper headLine="Publier une annonce">
 			<div style={{ display: displayAlert }}>
@@ -112,16 +113,26 @@ const AdForm = (props) => {
 					</span>
 				)}
 				<div className="textAreaWrap">
-					<textarea
+					{/* <textarea
 						maxLength="1000"
 						name="resume"
 						placeholder="Description"
 						type="textarea"
 						onChange={(e) => {
-							SetcharactCount(e.target.maxLength - e.target.value.length);
+							SetCharacterCount(e.target.maxLength - e.target.value.length);
 							handleChange(e);
 						}}
+					/> */}
+
+					<CKEditor
+						name="resume"
+						// maxLength={1000}
+						placeholder="Description"
+						onChange={(e) => {
+							handleChange(e.editor.getData());
+						}}
 					/>
+
 					{charactCount !== 0 ? (
 						<span
 							className="charactCounter"

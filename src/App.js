@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // firebase
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkUserSession } from './redux/User/user.actions';
 
 // hoc
@@ -26,18 +26,18 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import AdminToolBar from './components/AdminToolBar/AdminToolBar';
 import ItemPage from './pages/ItemPage/ItemPage';
 
+const mapState = ({ items }) => ({
+	item: items.item,
+});
+
 const App = (props) => {
-	// console.log('props App : ', props);
-
-	// --- destructuring 'store' from Redux Provider
 	const dispatch = useDispatch();
+	const { item } = useSelector(mapState);
 
-	// ----------- Loop instruction on app initialization.
 	useEffect(() => {
 		dispatch(checkUserSession());
 	}, []);
 
-	// ----------- Routing define with layout and page associate.
 	return (
 		<div className="App">
 			<AdminToolBar />
@@ -78,10 +78,9 @@ const App = (props) => {
 					)}
 				/>
 				<Route
-					exact
-					path={'/item'}
+					path={'/item/:itemID'}
 					render={() => (
-						<FeatureLayout featureName="Item">
+						<FeatureLayout featureName={item.name ? item.name : 'Item'}>
 							<ItemPage />
 						</FeatureLayout>
 					)}

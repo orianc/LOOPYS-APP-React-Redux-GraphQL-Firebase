@@ -1,6 +1,6 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
 import itemsTypes from './items.types';
-import { fetchItemsStart, setItems } from './items.actions';
+import { fetchItemsStart, setItems, setItem } from './items.actions';
 import {
 	handleAddItem,
 	handleAddImage,
@@ -8,6 +8,7 @@ import {
 	handleFetchPhotos,
 	handleDeleteItem,
 	handleValidItem,
+	handleFetchItem,
 } from './items.helpers';
 
 export function* addItem({
@@ -87,11 +88,25 @@ export function* onValidationItemStart() {
 	yield takeLatest(itemsTypes.VALIDATION_ITEM_START, validItem);
 }
 
+export function* fetchItem({ payload }) {
+	try {
+		const item = yield handleFetchItem(payload);
+		yield put(setItem(item));
+	} catch (err) {
+		// console.error(err);
+	}
+}
+
+export function* onFetchItemStart() {
+	yield takeLatest(itemsTypes.FETCH_ITEM_START, fetchItem);
+}
+
 export default function* itemsSagas() {
 	yield all([
 		call(onAddItemStart),
 		call(onFetchItemsStart),
 		call(onDeleteItemStart),
 		call(onValidationItemStart),
+		call(onFetchItemStart),
 	]);
 }

@@ -139,3 +139,19 @@ export const handleValidItem = (documentId) => {
 			.catch((err) => reject(err));
 	});
 };
+
+export const handleFetchItem = (itemId) => {
+	return new Promise((resolve, reject) => {
+		firestore
+			.collection('items')
+			.doc(itemId)
+			.get()
+			.then((snapshot) => {
+				if (snapshot.exists) {
+					const data = snapshot.data();
+					resolve(data);
+				}
+			})
+			.catch((e) => reject(e));
+	});
+};

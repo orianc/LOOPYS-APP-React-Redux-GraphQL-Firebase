@@ -24,3 +24,13 @@ export const deleteItemStart = (itemId) => ({
 	type: itemsTypes.DELETE_ITEM_START,
 	payload: itemId,
 });
+
+export const fetchItemStart = (itemId) => ({
+	type: itemsTypes.FETCH_ITEM_START,
+	payload: itemId,
+});
+
+export const setItem = (item) => ({
+	type: itemsTypes.SET_ITEM,
+	payload: item,
+});

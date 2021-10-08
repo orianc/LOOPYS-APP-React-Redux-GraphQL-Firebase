@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 // firebase
 import { firestore } from '../../firebase/utils';
 // redux
@@ -17,7 +18,7 @@ const mapState = ({ user }) => ({
 const ItemCard = (props) => {
 	const dispatch = useDispatch();
 	const { currentUser } = useSelector(mapState);
-	const { item, index } = props;
+	const { item, index, displayItemPage } = props;
 	const [author, setAuthor] = useState(item.authorId);
 	const [displayResume, setDisplayResume] = useState(false);
 
@@ -39,58 +40,89 @@ const ItemCard = (props) => {
 		getAuthorName(author);
 	}, []);
 
-	const configAddToCard = {
+	const configAskForIt = {
 		type: 'button',
 	};
 
 	return (
 		<>
 			{item.documentId ? (
-				<div className="itemCard" key={index}>
+				<div
+					className="itemCard"
+					style={
+						displayItemPage && {
+							boxShadow: 'none',
+							width: '70%',
+							margin: '0 auto',
+							padding: 0,
+						}
+					}
+					key={index}
+				>
 					<div style={{ marginBottom: 10 }}>
-						<h3 style={{ textAlign: 'center' }}>{item.name}</h3>
+						{!displayItemPage ? (
+							<Link to={`/item/${item.documentId}`}>
+								<h3 style={{ textAlign: 'center' }}>{item.name}</h3>
+							</Link>
+						) : (
+							<h3 style={{ textAlign: 'center' }}>{item.name}</h3>
+						)}
 						<div className="itemImage">
-							<img
-								src={
-									'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
-								}
-								alt={item.name}
-							/>
+							{!displayItemPage ? (
+								<Link to={`/item/${item.documentId}`}>
+									<img
+										style={displayItemPage && { height: 400 }}
+										src={
+											'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+										}
+										alt={item.name}
+									/>
+								</Link>
+							) : (
+								<img
+									style={displayItemPage && { height: 400 }}
+									src={
+										'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+									}
+									alt={item.name}
+								/>
+							)}
 						</div>
 						{/* <p>{item.createAt.toString()}</p> */}
 						<div className="itemResume">
 							<span onClick={() => setDisplayResume(!displayResume)}>
-								{displayResume ? (
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										className="bi bi-chevron-compact-up"
-										viewBox="0 0 16 16"
-									>
-										<path
-											fillRule="evenodd"
-											d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"
-										/>
-									</svg>
-								) : (
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fill="currentColor"
-										className="bi bi-chevron-compact-down"
-										viewBox="0 0 16 16"
-									>
-										<path
-											fillRule="evenodd"
-											d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
-										/>
-									</svg>
-								)}
+								{!displayItemPage &&
+									(displayResume ? (
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="16"
+											height="16"
+											fill="currentColor"
+											className="bi bi-chevron-compact-up"
+											viewBox="0 0 16 16"
+										>
+											<path
+												fillRule="evenodd"
+												d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"
+											/>
+										</svg>
+									) : (
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="16"
+											height="16"
+											fill="currentColor"
+											className="bi bi-chevron-compact-down"
+											viewBox="0 0 16 16"
+										>
+											<path
+												fillRule="evenodd"
+												d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"
+											/>
+										</svg>
+									))}
 							</span>
-							{displayResume ? <p>{item.resume}</p> : null}
+							{displayResume || displayItemPage ? <p>{item.resume}</p> : null}
 						</div>
 						<div className="itemGlobalInfo">
 							{item.send && (
@@ -130,12 +162,17 @@ const ItemCard = (props) => {
 						</div>
 					</div>
 
-					<div className="itemActions">
+					<div
+						className="itemActions"
+						style={displayItemPage && { justifyContent: 'center' }}
+					>
 						<p className="itemAuthor">
 							de : {author.displayName && author.displayName}
 						</p>
 
-						<Button {...configAddToCard}>Ask for it</Button>
+						<Link to={`/item/${item.documentId}`}>
+							<Button {...configAskForIt}>Ask for it</Button>
+						</Link>
 
 						{currentUser &&
 						(currentUser.id === item.authorId ||

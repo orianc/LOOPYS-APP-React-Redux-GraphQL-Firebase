@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const FeatureHeader = (props) => {
 	return (
 		<header className="feature-header-center">
-			<Link to="/">
+			<Link to="/search">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="25"

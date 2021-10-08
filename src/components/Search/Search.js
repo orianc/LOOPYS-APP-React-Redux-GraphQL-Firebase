@@ -6,6 +6,7 @@ const SearchInput = ({
 	defaultValue,
 	handleChange,
 	label,
+	placeholder,
 	...otherProps
 }) => {
 	console.log();
@@ -16,7 +17,9 @@ const SearchInput = ({
 				{label && <label>{label}</label>}
 				<input
 					className="searchInput"
+					maxLength={20}
 					onChange={handleChange}
+					placeholder={placeholder}
 					{...otherProps}
 				/>
 				{/* 

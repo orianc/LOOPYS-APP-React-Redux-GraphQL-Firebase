@@ -15,9 +15,9 @@ export const setItems = (items) => ({
 	payload: items,
 });
 
-export const validItem = (itemId) => ({
+export const validItem = (documentId) => ({
 	type: itemsTypes.VALIDATION_ITEM_START,
-	payload: itemId,
+	payload: documentId,
 });
 
 export const deleteItemStart = (itemId) => ({

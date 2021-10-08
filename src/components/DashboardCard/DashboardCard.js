@@ -2,7 +2,14 @@ import React from 'react';
 import './dashboardCard.scss';
 import { useDispatch } from 'react-redux';
 import { validItem } from '../../redux/Items/items.actions';
-const DashboardCard = ({ titleCard, content, children }) => {
+import Button from '../../statics-components/Button/Button';
+const DashboardCard = ({
+	titleCard,
+	content,
+	children,
+	actionClick,
+	lengthItems,
+}) => {
 	const dispatch = useDispatch();
 
 	const handleValidItem = (item) => {
@@ -14,15 +21,18 @@ const DashboardCard = ({ titleCard, content, children }) => {
 	return (
 		<div className="dashboardCard">
 			<div className="infoCard">
-				<h3>{titleCard}</h3>
-				{content[0] && <span>{content.length}</span>}
+				<div className="titleCard">
+					<h3>{titleCard}</h3>
+					{lengthItems && <span>{lengthItems}</span>}
+				</div>
+				{actionClick && <Button onClick={actionClick}>Load</Button>}
 			</div>
 			{children}
 
-			{content.length > 0
+			{content.length > 0 && content[0] != null
 				? content.map((c, index) => (
 						<>
-							{(c.name || c.displayName) && (
+							{c.name || c.displayName ? (
 								<div className="item" key={index}>
 									<p>{c.name ? c.name : c.displayName}</p>
 									{c.verified === false && (
@@ -31,7 +41,7 @@ const DashboardCard = ({ titleCard, content, children }) => {
 										</button>
 									)}
 								</div>
-							)}
+							) : null}
 						</>
 				  ))
 				: null}

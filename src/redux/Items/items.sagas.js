@@ -49,19 +49,12 @@ export function* onAddItemStart() {
 	yield takeLatest(itemsTypes.ADD_NEW_ITEM_START, addItem);
 }
 
-export function* fetchItems({ payload: { filterType } }) {
+export function* fetchItems({ payload }) {
 	try {
-		const items = yield handleFetchItems({ filterType });
+		const items = yield handleFetchItems(payload);
 		yield put(setItems(items));
-		// const itemsFullData = [];
-		// yield items.map((item) => {
-		// 	var imageUrl = handleFetchPhotos(item.id);
-		// 	item.imageUrl = imageUrl;
-		// 	return itemsFullData.push(item);
-		// });
-		// yield console.log('item fulldata = ', itemsFullData);
 	} catch (err) {
-		// console.error(err);
+		console.error(err);
 	}
 }
 
@@ -72,9 +65,9 @@ export function* onFetchItemsStart() {
 export function* deleteItem({ payload }) {
 	try {
 		yield handleDeleteItem(payload);
-		yield put(fetchItemsStart());
+		yield put(fetchItemsStart({ pageSize: null }));
 	} catch (e) {
-		// console.error(e);
+		console.error(e);
 	}
 }
 
@@ -85,7 +78,6 @@ export function* onDeleteItemStart() {
 export function* validItem({ payload }) {
 	try {
 		yield handleValidItem(payload);
-		yield put(fetchItemsStart());
 	} catch (err) {
 		console.error(err);
 	}

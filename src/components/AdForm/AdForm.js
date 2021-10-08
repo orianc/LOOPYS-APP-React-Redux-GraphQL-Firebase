@@ -64,7 +64,7 @@ const AdForm = (props) => {
 	};
 
 	const handleSubmit = async (e) => {
-		if (Item.send || Item.withdrawal) {
+		if ((Item.send || Item.withdrawal) && Item.loopysValue <= 1000) {
 			Item.keyWords = Item.name.toLowerCase().split(' ');
 
 			e.preventDefault();
@@ -154,6 +154,7 @@ const AdForm = (props) => {
 					name="loopysValue"
 					type="number"
 					otherClass="loopysValue"
+					max={1000}
 					required
 				>
 					<img src={SpinMoneyTitle} alt="" style={{ height: 35 }} />

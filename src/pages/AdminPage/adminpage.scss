@@ -1,0 +1,17 @@
+.adminPage {
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.dataCounter {
+		padding: 5px;
+		border-radius: 5px;
+		background-color: var(--main-red);
+		color: white;
+	}
+	.callToActions {
+		display: flex;
+		align-items: center;
+	}
+}

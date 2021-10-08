@@ -4,15 +4,31 @@
 	background-color: var(--main-grey);
 	.infoCard {
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 		h3 {
 			text-transform: uppercase;
 			font-weight: 600;
 			font-size: small;
+			margin: 0;
+			margin-right: 5px;
+		}
+		.btn {
+			margin: 0;
+		}
+		.titleCard {
+			display: flex;
+			align-items: center;
 		}
 	}
 	.item {
+		svg {
+			cursor: pointer;
+			margin: 5px;
+		}
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px white solid;
 	}
 }

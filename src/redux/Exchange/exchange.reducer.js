@@ -1,5 +1,8 @@
 import exchangeTypes from './exchange.types';
-import { handleAddToExchange } from './exchange.utils';
+import {
+	handleAddToExchange,
+	handleRemoveExchangeItem,
+} from './exchange.utils';
 const initialState = {
 	exchangeItems: [],
 };
@@ -12,6 +15,14 @@ const exchangeReducer = (state = initialState, action) => {
 				exchangeItems: handleAddToExchange({
 					prevExchangeItems: state.exchangeItems,
 					nextExchangeItems: action.payload,
+				}),
+			};
+		case exchangeTypes.REMOVE_EXCHANGE_ITEM:
+			return {
+				...state,
+				exchangeItems: handleRemoveExchangeItem({
+					prevExchangeItems: state.exchangeItems,
+					exchangeItemToRemove: action.payload,
 				}),
 			};
 

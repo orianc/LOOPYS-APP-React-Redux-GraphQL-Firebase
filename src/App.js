@@ -20,6 +20,7 @@ import NewAdsPage from './pages/NewAdsPage/NewAdsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
+import ExchangePage from './pages/ExchangePage/ExchangePage';
 import AdminPage from './pages/AdminPage/AdminPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 // components
@@ -91,6 +92,16 @@ const App = (props) => {
 						<WithAuth>
 							<FeatureLayout featureName="Mon profil">
 								<DashboardPage />
+							</FeatureLayout>
+						</WithAuth>
+					)}
+				/>
+				<Route
+					path="/exchange"
+					render={() => (
+						<WithAuth>
+							<FeatureLayout featureName="Ma boucle">
+								<ExchangePage />
 							</FeatureLayout>
 						</WithAuth>
 					)}

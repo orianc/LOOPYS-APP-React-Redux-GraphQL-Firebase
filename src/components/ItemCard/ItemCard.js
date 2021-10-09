@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 // firebase
 import { firestore } from '../../firebase/utils';
 // redux
@@ -15,33 +15,37 @@ import SpinMoney from '../../assets/spin-money.svg';
 
 import './itemcard.scss';
 
+import { getAuthorName } from './ItemCardUtils';
+
 const mapState = ({ user }) => ({
 	currentUser: user.currentUser,
 });
 
 const ItemCard = (props) => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { currentUser } = useSelector(mapState);
 	const { item, index, displayItemPage } = props;
 	const [author, setAuthor] = useState(item.authorId);
 	const [displayResume, setDisplayResume] = useState(false);
 
-	const getAuthorName = (authorId) => {
-		try {
-			return firestore
-				.collection('users')
-				.doc(authorId)
-				.get()
-				.then((docRef) => {
-					setAuthor(docRef.data());
-				});
-		} catch (e) {
-			console.error(e);
-		}
-	};
+	// getAuthorName(authorId);
+	// const getAuthorName = (authorId) => {
+	// 	try {
+	// 		return firestore
+	// 			.collection('users')
+	// 			.doc(authorId)
+	// 			.get()
+	// 			.then((docRef) => {
+	// 				setAuthor(docRef.data());
+	// 			});
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 	}
+	// };
 
 	useEffect(() => {
-		getAuthorName(author);
+		getAuthorName(author, setAuthor);
 	}, []);
 
 	// Réfléchir pour changer le state de l'item 'open' => 'asked' => 'exchanged'
@@ -49,6 +53,7 @@ const ItemCard = (props) => {
 		if (!item) return;
 		dispatch(addItem(item));
 		dispatch(fetchItemsStart());
+		history.push('/exchange');
 	};
 
 	return (

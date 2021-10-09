@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import { firestore } from '../../firebase/utils';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteItemStart } from '../../redux/Items/items.actions';
+import {
+	deleteItemStart,
+	fetchItemsStart,
+} from '../../redux/Items/items.actions';
+import { addItem } from '../../redux/Exchange/exchange.actions';
 // component
 import Button from '../../statics-components/Button/Button';
 import SpinMoney from '../../assets/spin-money.svg';
@@ -40,8 +44,11 @@ const ItemCard = (props) => {
 		getAuthorName(author);
 	}, []);
 
-	const configAskForIt = {
-		type: 'button',
+	// Réfléchir pour changer le state de l'item 'open' => 'asked' => 'exchanged'
+	const handleClickAddToExchange = (item) => {
+		if (!item) return;
+		dispatch(addItem(item));
+		dispatch(fetchItemsStart());
 	};
 
 	return (
@@ -170,9 +177,9 @@ const ItemCard = (props) => {
 							de : {author.displayName && author.displayName}
 						</p>
 
-						<Link to={`/item/${item.documentId}`}>
-							<Button {...configAskForIt}>Ask for it</Button>
-						</Link>
+						<Button onClick={() => handleClickAddToExchange(item)}>
+							Ask for it
+						</Button>
 
 						{currentUser &&
 						(currentUser.id === item.authorId ||

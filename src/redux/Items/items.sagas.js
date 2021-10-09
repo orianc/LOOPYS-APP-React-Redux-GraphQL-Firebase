@@ -5,7 +5,7 @@ import {
 	handleAddItem,
 	handleAddImage,
 	handleFetchItems,
-	handleFetchPhotos,
+	// handleFetchPhotos,
 	handleDeleteItem,
 	handleValidItem,
 	handleFetchItem,

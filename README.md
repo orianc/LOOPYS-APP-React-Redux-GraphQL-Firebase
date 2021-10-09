@@ -10,3 +10,4 @@
 - **exchange between users**
 - edit item for author and admin.
 - update ui product load on admin dashboard.
+- dev profile page.

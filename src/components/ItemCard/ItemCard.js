@@ -51,9 +51,14 @@ const ItemCard = (props) => {
 	// Réfléchir pour changer le state de l'item 'open' => 'asked' => 'exchanged'
 	const handleClickAddToExchange = (item) => {
 		if (!item) return;
-		dispatch(addItem(item));
-		dispatch(fetchItemsStart());
-		history.push('/exchange');
+		if (!currentUser) return history.push('/login');
+		try {
+			dispatch(addItem(item));
+			dispatch(fetchItemsStart());
+			history.push('/exchange');
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (

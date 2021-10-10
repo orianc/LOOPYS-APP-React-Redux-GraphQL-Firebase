@@ -17,7 +17,6 @@ const mapState = ({ user, exchange }) => ({
 const Header = (props) => {
 	const dispatch = useDispatch();
 	const { currentUser, currentExchangeCount } = useSelector(mapState);
-	console.log(currentExchangeCount.length);
 
 	const signOut = () => {
 		dispatch(signOutUserStart());

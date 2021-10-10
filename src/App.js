@@ -26,6 +26,7 @@ import SearchPage from './pages/SearchPage/SearchPage';
 // components
 import AdminToolBar from './components/AdminToolBar/AdminToolBar';
 import ItemPage from './pages/ItemPage/ItemPage';
+import { fetchItemsStart } from './redux/Items/items.actions';
 
 const mapState = ({ items }) => ({
 	item: items.item,
@@ -37,6 +38,7 @@ const App = (props) => {
 
 	useEffect(() => {
 		dispatch(checkUserSession());
+		dispatch(fetchItemsStart());
 	}, []);
 
 	return (
@@ -56,9 +58,9 @@ const App = (props) => {
 					exact
 					path="/login"
 					render={() => (
-						<FeatureLayout featureName="Authentification">
+						<MainLayout>
 							<AuthPage />
-						</FeatureLayout>
+						</MainLayout>
 					)}
 				/>
 				<Route

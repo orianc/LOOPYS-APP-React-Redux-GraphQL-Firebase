@@ -1,4 +1,5 @@
 import { firestore } from '../../firebase/utils';
+
 export const getAuthorName = async (authorId) => {
 	if (!authorId) return;
 	const doc = firestore.collection('users').doc(authorId);

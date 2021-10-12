@@ -42,7 +42,7 @@ const ItemCard = (props) => {
 				`Oups ! Vous demandez un item à ${item.loopysValue} Loopys, mais vous disposez de ${currentUser.loopys} Loopys`,
 			);
 		try {
-			dispatch(addItem(item));
+			dispatch(addItem(item, currentUser.displayName));
 			dispatch(fetchItemsStart());
 			history.push('/exchange');
 		} catch (err) {

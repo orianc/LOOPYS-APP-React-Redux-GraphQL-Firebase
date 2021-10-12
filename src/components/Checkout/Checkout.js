@@ -91,7 +91,7 @@ const Checkout = ({}) => {
 								<div className="actions">
 									{item.askedBy && (
 										<div className="someoneAsked">
-											<span>{item.askedBy.userName} demande cet item</span>
+											<span>{item.askedBy.askerName} demande cet item</span>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												width="16"

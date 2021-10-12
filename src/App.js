@@ -28,13 +28,14 @@ import AdminToolBar from './components/AdminToolBar/AdminToolBar';
 import ItemPage from './pages/ItemPage/ItemPage';
 import { fetchItemsStart } from './redux/Items/items.actions';
 
-const mapState = ({ items }) => ({
+const mapState = ({ items, user }) => ({
 	item: items.item,
+	currentUser: user.currentUser,
 });
 
 const App = (props) => {
 	const dispatch = useDispatch();
-	const { item } = useSelector(mapState);
+	const { item, currentUser } = useSelector(mapState);
 
 	useEffect(() => {
 		dispatch(checkUserSession());

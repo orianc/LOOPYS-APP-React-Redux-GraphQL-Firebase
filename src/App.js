@@ -19,7 +19,7 @@ import AuthPage from './pages/AuthPage/AuthPage';
 import NewAdsPage from './pages/NewAdsPage/NewAdsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 import RecoveryPage from './pages/Recovery/RecoveryPage copy';
-import DashboardPage from './pages/DashboardPage/DashboardPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 import ExchangePage from './pages/ExchangePage/ExchangePage';
 import AdminPage from './pages/AdminPage/AdminPage';
 import SearchPage from './pages/SearchPage/SearchPage';
@@ -88,14 +88,22 @@ const App = (props) => {
 						</FeatureLayout>
 					)}
 				/>
-				<Route
+				{/* <Route
 					path="/dashboard"
 					render={() => (
 						<WithAuth>
 							<FeatureLayout featureName="Mon profil">
-								<DashboardPage />
+								<ProfilePage />
 							</FeatureLayout>
 						</WithAuth>
+					)}
+				/> */}
+				<Route
+					path={'/profile/:userID'}
+					render={() => (
+						<FeatureLayout featureName={''}>
+							<ProfilePage />
+						</FeatureLayout>
 					)}
 				/>
 				<Route

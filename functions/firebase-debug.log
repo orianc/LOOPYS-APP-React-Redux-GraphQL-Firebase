@@ -1,0 +1,25 @@
+[debug] [2021-10-10T11:56:03.071Z] ----------------------------------------------------------------------
+[debug] [2021-10-10T11:56:03.073Z] Command:       E:\Program Files\node.exe C:\Users\orian\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2021-10-10T11:56:03.073Z] CLI Version:   9.20.0
+[debug] [2021-10-10T11:56:03.073Z] Platform:      win32
+[debug] [2021-10-10T11:56:03.073Z] Node Version:  v14.17.0
+[debug] [2021-10-10T11:56:03.074Z] Time:          Sun Oct 10 2021 13:56:03 GMT+0200 (heure d’été d’Europe centrale)
+[debug] [2021-10-10T11:56:03.074Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-10-10T11:56:03.118Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-10-10T11:56:03.118Z] > authorizing via signed-in user (orian.ea15@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  E:\Users\orian\GoogleDrive\Digital Campus\Projets\projet-5-patinoire-loopys\developpement\loopys
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+

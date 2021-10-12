@@ -63,10 +63,10 @@ export function* onFetchItemsStart() {
 	yield takeLatest(itemsTypes.FETCH_ITEMS_START, fetchItems);
 }
 
-export function* deleteItem({ payload }) {
+export function* deleteItem({ payload: { itemId, pageSize } }) {
 	try {
-		yield handleDeleteItem(payload);
-		yield put(fetchItemsStart({ pageSize: null }));
+		yield handleDeleteItem(itemId);
+		yield put(fetchItemsStart({ pageSize }));
 	} catch (e) {
 		console.error(e);
 	}

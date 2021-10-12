@@ -28,16 +28,18 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
 
 	// if user doesn't exist in firestore db, we make it.
 	if (!snapshot.exists) {
-		const { email, displayName } = userAuth;
+		const { email, displayName, uid } = userAuth;
 		const timestamp = new Date();
 		const userRoles = ['user'];
-
+		console.log(userAuth);
 		try {
 			await userRef.set({
 				displayName,
 				email,
+				id: uid,
 				createdDate: timestamp,
 				userRoles,
+				loopys: 200,
 				...additionalData,
 			});
 		} catch (error) {

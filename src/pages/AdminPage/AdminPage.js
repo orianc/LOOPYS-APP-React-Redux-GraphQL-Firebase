@@ -19,6 +19,7 @@ const AdminPage = () => {
 	const { data, isLastPage } = itemsData;
 	const dispatch = useDispatch();
 	const [usersList, setUsersList] = useState([]);
+	const [reload, setReload] = useState(0);
 
 	const handleLoadMore = () => {
 		dispatch(
@@ -34,17 +35,16 @@ const AdminPage = () => {
 		dispatch(fetchItemsStart({ askItemsToValid: true }));
 	};
 
+	const getAllUsers = async () => {
+		const Ref = await firestore.collection('/users').get();
+		const docs = Ref.docs;
+		const data = [docs.map((doc) => doc.data())];
+		return data;
+	};
 	useEffect(() => {
 		dispatch(fetchItemsStart({ askItemsToValid: true }));
-
-		const getAllUsers = async () => {
-			const Ref = await firestore.collection('/users').get();
-			const docs = Ref.docs;
-			const data = [docs.map((doc) => doc.data())];
-			return data;
-		};
 		getAllUsers().then((res) => setUsersList(res[0]));
-	}, []);
+	}, [reload]);
 
 	// console.log('itemsData', itemsData);
 	console.log('data', data);
@@ -78,7 +78,10 @@ const AdminPage = () => {
 											Valider l'annonce
 										</Button>
 										<span
-											onClick={() => dispatch(deleteItemStart(item.documentId))}
+											onClick={() => {
+												dispatch(deleteItemStart(item.documentId, 3));
+												setReload(reload + 1);
+											}}
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"

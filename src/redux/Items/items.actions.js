@@ -20,9 +20,9 @@ export const validItem = (documentId) => ({
 	payload: documentId,
 });
 
-export const deleteItemStart = (itemId) => ({
+export const deleteItemStart = (itemId, pageSize = null) => ({
 	type: itemsTypes.DELETE_ITEM_START,
-	payload: itemId,
+	payload: { itemId, pageSize },
 });
 
 export const fetchItemStart = (itemId) => ({

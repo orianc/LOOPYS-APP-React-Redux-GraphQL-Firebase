@@ -45,7 +45,7 @@ const Header = (props) => {
 							</svg>
 							<span>Ajouter une annonce</span>
 						</Link>
-						<Link to="/dashboard">
+						<Link to={`/profile/${currentUser.id}`}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"

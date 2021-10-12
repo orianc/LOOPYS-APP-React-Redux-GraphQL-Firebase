@@ -29,21 +29,6 @@ const ItemCard = (props) => {
 	const [author, setAuthor] = useState(item.authorId);
 	const [displayResume, setDisplayResume] = useState(false);
 
-	// getAuthorName(authorId);
-	// const getAuthorName = (authorId) => {
-	// 	try {
-	// 		return firestore
-	// 			.collection('users')
-	// 			.doc(authorId)
-	// 			.get()
-	// 			.then((docRef) => {
-	// 				setAuthor(docRef.data());
-	// 			});
-	// 	} catch (e) {
-	// 		console.error(e);
-	// 	}
-	// };
-
 	useEffect(() => {
 		getAuthorName(author, setAuthor);
 	}, []);
@@ -52,6 +37,10 @@ const ItemCard = (props) => {
 	const handleClickAddToExchange = (item) => {
 		if (!item) return;
 		if (!currentUser) return history.push('/login');
+		if (!currentUser.loopys || currentUser.loopys < item.loopysValue)
+			return alert(
+				`Oups ! Vous demandez un item à ${item.loopysValue} Loopys, mais vous disposez de ${currentUser.loopys} Loopys`,
+			);
 		try {
 			dispatch(addItem(item));
 			dispatch(fetchItemsStart());
@@ -183,9 +172,11 @@ const ItemCard = (props) => {
 						className="itemActions"
 						style={displayItemPage && { justifyContent: 'center' }}
 					>
-						<p className="itemAuthor">
-							de : {author.displayName && author.displayName}
-						</p>
+						<Link to={`/profile/${item.authorId}`}>
+							<p className="itemAuthor">
+								de : {author.displayName && author.displayName}
+							</p>
+						</Link>
 
 						<Button onClick={() => handleClickAddToExchange(item)}>
 							Ask for it

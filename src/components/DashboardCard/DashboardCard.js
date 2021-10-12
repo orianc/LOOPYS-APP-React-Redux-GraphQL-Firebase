@@ -3,6 +3,7 @@ import './dashboardCard.scss';
 import { useDispatch } from 'react-redux';
 import { validItem } from '../../redux/Items/items.actions';
 import Button from '../../statics-components/Button/Button';
+import { Link } from 'react-router-dom';
 const DashboardCard = ({
 	titleCard,
 	content,
@@ -34,7 +35,14 @@ const DashboardCard = ({
 						<>
 							{c.name || c.displayName ? (
 								<div className="item" key={index}>
-									<p>{c.name ? c.name : c.displayName}</p>
+									<p>
+										{c.name ? (
+											c.name
+										) : (
+											<Link to={`/profile/${c.id}`}>{c.displayName}</Link>
+										)}
+									</p>
+									<p>{c.userRoles && c.userRoles.map((role) => `${role} `)}</p>
 									{c.verified === false && (
 										<button onClick={() => handleValidItem(c)}>
 											Valider l'annonce

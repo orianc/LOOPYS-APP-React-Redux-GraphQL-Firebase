@@ -42,6 +42,7 @@ const AdForm = (props) => {
 	const [Item, setItem] = useState(initialState);
 	const [charactCount, SetcharactCount] = useState(0);
 	const [displayAlert, setDisplayAlert] = useState('none');
+	const [displayAlertSuccess, setDisplayAlertSuccess] = useState('none');
 
 	const handleChange = (e) => {
 		setItem({ ...Item, [e.target.name]: e.target.value });
@@ -64,16 +65,18 @@ const AdForm = (props) => {
 	};
 
 	const handleSubmit = async (e) => {
+		e.preventDefault();
 		if ((Item.send || Item.withdrawal) && Item.loopysValue <= 1000) {
-			Item.keyWords = Item.name.toLowerCase().split(' ');
-
-			e.preventDefault();
-			await dispatch(addItemStart(Item));
-			resetForm();
-			return history.push('/search');
+			setDisplayAlertSuccess('block');
+			setTimeout(() => {
+				Item.keyWords = Item.name.toLowerCase().split(' ');
+				dispatch(addItemStart(Item));
+				resetForm();
+				return history.push('/search');
+			}, 4000);
+		} else {
+			return setDisplayAlert('block');
 		}
-		await setDisplayAlert('block');
-		return history.push('/new-ads');
 	};
 
 	// console.log(Item);
@@ -85,7 +88,14 @@ const AdForm = (props) => {
 					Vous devez choisir au moins une méthode de délivrance...{' '}
 				</Alert>
 			</div>
-			<form className="adForm" onSubmit={handleSubmit}>
+			<div style={{ display: displayAlertSuccess }}>
+				<Alert headLine={'Merci !'} state={'success'}>
+					{' '}
+					Votre publication serra vérifiée et validée par un administrateur
+					avant d'être visible.{' '}
+				</Alert>
+			</div>
+			<form className="adForm">
 				<FormInput
 					onChange={(e) => handleChange(e)}
 					autoFocus
@@ -154,6 +164,7 @@ const AdForm = (props) => {
 					name="loopysValue"
 					type="number"
 					otherClass="loopysValue"
+					min={1}
 					max={1000}
 					required
 				>
@@ -182,7 +193,7 @@ const AdForm = (props) => {
 					<p>Je certifie qu'il n'y a aucun contenu illégal ou inapproprié *</p>
 				</FormInput>
 
-				<Button type="submit">Publication</Button>
+				<Button onClick={handleSubmit}>Publication</Button>
 				<p className="policy">
 					Votre publication serra vérifiée et validée par un administrateur
 					avant d'être visible.

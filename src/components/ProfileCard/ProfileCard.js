@@ -23,7 +23,6 @@ const ProfileCard = ({ userID }) => {
 		if (userID) {
 			getAuthorName(userID, setProfile);
 		}
-		return setProfile(currentUser);
 	}, []);
 
 	useEffect(() => {
@@ -45,31 +44,36 @@ const ProfileCard = ({ userID }) => {
 
 	console.log('userID', userID);
 	return (
-		<div className="profileCard">
-			<h1>{profile.displayName}</h1>
-			{profile.id === currentUser.id && (
-				<span className="loopysCount">
-					{loopys ? loopys : 0}
-					<img src={spinMoney} alt="loopys" height={20} />
-				</span>
-			)}
-			<div className="wrapper">
-				{userItems && userItems.length > 0 && (
-					<h2>
-						{profile.id === currentUser.id && 'Je'}
-						propose
-					</h2>
-				)}
-				<div className="itemsWrapper">
-					{userItems &&
-						userItems.length > 0 &&
-						userItems.map((item, pos) => <ItemCard item={item} index={pos} />)}
-				</div>
-			</div>
+		<>
+			{!profile.displayName && <p>loading...</p>}
+			{profile && (
+				<div className="profileCard">
+					<h1>{profile.displayName}</h1>
+					{profile.id === currentUser.id && (
+						<span className="loopysCount">
+							{loopys ? loopys : 0}
+							<img src={spinMoney} alt="loopys" height={20} />
+						</span>
+					)}
+					<div className="wrapper">
+						{userItems && userItems.length > 0 && (
+							<h2>
+								{profile.id === currentUser.id && 'Je '}
+								propose
+							</h2>
+						)}
+						<div className="itemsWrapper">
+							{userItems &&
+								userItems.length > 0 &&
+								userItems.map((item, pos) => (
+									<ItemCard item={item} index={pos} />
+								))}
+						</div>
+					</div>
 
-			<div className="wrapper">
-				<div className="informationAccount">
-					{/* <div className="line">
+					<div className="wrapper">
+						<div className="informationAccount">
+							{/* <div className="line">
 						<label>Email :</label>
 						<FormInput
 							placeholder={email}
@@ -77,21 +81,25 @@ const ProfileCard = ({ userID }) => {
 							onChange={(e) => handleChange(e)}
 						/>
 					</div> */}
-					{profile.id === currentUser.id && (
-						<div className="line">
-							<label>Téléphone :</label>
-							<FormInput
-								type="number"
-								onChange={(e) => handleChange(e)}
-								placeholder={tel}
-								name="tel"
-							/>
-							<Button onClick={() => handleUpdate(userAccount)}>Update</Button>
+							{profile.id === currentUser.id && (
+								<div className="line">
+									<label>Téléphone :</label>
+									<FormInput
+										type="number"
+										onChange={(e) => handleChange(e)}
+										placeholder={tel}
+										name="tel"
+									/>
+									<Button onClick={() => handleUpdate(userAccount)}>
+										Update
+									</Button>
+								</div>
+							)}
 						</div>
-					)}
+					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 

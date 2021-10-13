@@ -32,6 +32,22 @@ export const updateDBItemState = async ({ state, itemId, userName }) => {
 			.then(() => console.log('document updated !'))
 			.catch((e) => console.error(e));
 	}
+	if (state === 'accepted') {
+		await doc
+			.update({
+				state: 'accepted',
+			})
+			.then(() => console.log('Exchange state : accepted'))
+			.catch((e) => console.error(e));
+	}
+	if (state === 'done') {
+		await doc
+			.update({
+				state: 'done',
+			})
+			.then(() => console.log('exchange done.'))
+			.catch((e) => console.error(e));
+	}
 };
 
 export const handleAddToExchange = ({
@@ -87,6 +103,7 @@ export const checkExchangeDbResult = (currentUser) => {
 			uid: currentUser.id,
 			askerName: currentUser.displayName,
 		});
+
 		doc
 			.get()
 			.then((snapshot) => {
@@ -103,4 +120,44 @@ export const checkExchangeDbResult = (currentUser) => {
 			})
 			.catch((e) => reject(e));
 	});
+};
+
+export const getUserLoopysCount = (userId) => {
+	return new Promise((resolve, reject) => {
+		const userRef = firestore.collection('users').doc(userId);
+		userRef
+			.get()
+			.then((snapshot) => {
+				const data = snapshot.data();
+				resolve(data);
+			})
+			.catch((e) => reject(e));
+	});
+};
+
+export const loopysTransaction = async (loopysValue, askerId, authorId) => {
+	const parsed = (number) => {
+		return parseInt(number, 10);
+	};
+
+	const AuthorLoopysCount = await getUserLoopysCount(authorId);
+	const AskerLoopysCount = await getUserLoopysCount(askerId);
+
+	await firestore
+		.collection('users')
+		.doc(authorId)
+		.update({
+			loopys: parsed(AuthorLoopysCount.loopys) + parsed(loopysValue),
+		})
+		.then(() => console.log('Author Loopys upDate.'))
+		.catch((e) => console.error(e));
+
+	await firestore
+		.collection('users')
+		.doc(askerId)
+		.update({
+			loopys: parsed(AskerLoopysCount.loopys) - parsed(loopysValue),
+		})
+		.then(() => console.log('Asker Loopys upDate.'))
+		.catch((e) => console.error(e));
 };

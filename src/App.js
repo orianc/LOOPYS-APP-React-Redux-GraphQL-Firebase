@@ -30,12 +30,11 @@ import { fetchItemsStart } from './redux/Items/items.actions';
 
 const mapState = ({ items, user }) => ({
 	item: items.item,
-	currentUser: user.currentUser,
 });
 
 const App = (props) => {
 	const dispatch = useDispatch();
-	const { item, currentUser } = useSelector(mapState);
+	const { item } = useSelector(mapState);
 
 	useEffect(() => {
 		dispatch(checkUserSession());

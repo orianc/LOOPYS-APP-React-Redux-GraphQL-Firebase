@@ -2,15 +2,16 @@
 
 ## Need a fix
 
-- on ad form : submit without send/withdrawal option.
+- bloquer les loopys d'un utilisateur quand un échange est en attente
 - on ad form : upload image.
+- gérer l'affichage des items quand le statut change ( 'asked', 'done')
 
 ## Next features
 
 - **exchange between users**
+- chat to process an exchange
 - edit item for author and admin.
 - update ui product load on admin dashboard.
-- dev profile page.
 - manage exchange by user location.
 
 <https://stackoverflow.com/questions/64757487/how-to-change-redux-persisted-data-after-logged-in-as-different-user>

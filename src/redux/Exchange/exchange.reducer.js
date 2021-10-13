@@ -30,7 +30,6 @@ const exchangeReducer = (state = initialState, action) => {
 				...state,
 				exchangeItems: initialState,
 			};
-
 		case exchangeTypes.REMOVE_EXCHANGE_ITEM:
 			return {
 				...state,

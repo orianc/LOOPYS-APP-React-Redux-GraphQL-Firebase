@@ -16,6 +16,7 @@ import SpinMoney from '../../assets/spin-money.svg';
 import './itemcard.scss';
 
 import { getAuthorName } from './ItemCardUtils';
+import moment from 'moment';
 
 const mapState = ({ user }) => ({
 	currentUser: user.currentUser,
@@ -33,7 +34,6 @@ const ItemCard = (props) => {
 		getAuthorName(author, setAuthor);
 	}, []);
 
-	// Réfléchir pour changer le state de l'item 'open' => 'asked' => 'exchanged'
 	const handleClickAddToExchange = (item) => {
 		if (!item) return;
 		if (!currentUser) return history.push('/login');
@@ -44,10 +44,15 @@ const ItemCard = (props) => {
 		try {
 			dispatch(addItem(item, currentUser.displayName));
 			dispatch(fetchItemsStart());
-			history.push('/exchange');
+			setTimeout(() => history.push('/exchange'), 2000);
 		} catch (err) {
 			console.error(err);
 		}
+	};
+
+	const handleDeleteItem = (item) => {
+		dispatch(deleteItemStart(item.documentId));
+		dispatch(fetchItemsStart());
 	};
 
 	return (
@@ -94,7 +99,8 @@ const ItemCard = (props) => {
 								/>
 							)}
 						</div>
-						{/* <p>{item.createAt.toString()}</p> */}
+						<p>{moment(item.createAt.nano).format('DD/MM/YYYY')}</p>
+
 						<div className="itemResume">
 							<span onClick={() => setDisplayResume(!displayResume)}>
 								{!displayItemPage &&
@@ -187,11 +193,13 @@ const ItemCard = (props) => {
 						(currentUser.id === item.authorId ||
 							currentUser.userRoles.includes('admin')) ? (
 							<>
-								<Button>edit</Button>
-
-								<span
-									onClick={() => dispatch(deleteItemStart(item.documentId))}
+								<Button
+									onClick={() => alert('fonctionnalité bientôt disponible !')}
 								>
+									edit
+								</Button>
+
+								<span onClick={() => handleDeleteItem(item)}>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										width="16"

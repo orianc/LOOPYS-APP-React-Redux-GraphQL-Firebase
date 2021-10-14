@@ -40,6 +40,7 @@ export function* addItem({
 			verified,
 			state,
 			keyWords,
+			clearHistoryAsker: false,
 		}).then(() => handleAddImage(photos, id));
 	} catch (err) {
 		yield console.error('on add item saga', err);

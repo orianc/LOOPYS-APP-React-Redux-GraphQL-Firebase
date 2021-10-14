@@ -37,17 +37,21 @@ export const handleFetchItems = ({
 	persistItems = [],
 	askItemsToValid,
 	pageSize = 3,
+	notDone = false,
 }) => {
 	return new Promise((resolve, reject) => {
 		const pageSizeOnSearch = 6;
 
 		let ref = firestore.collection('items');
-
+		if (notDone) {
+			ref = ref.where('state', '!=', 'done').orderBy('state');
+		}
 		if (filterType) {
 			ref = ref
 				.where('keyWords', 'array-contains', filterType)
 				.limit(pageSizeOnSearch);
 		}
+
 		if (pageSize != null) {
 			ref = ref.orderBy('createAt').limit(pageSize);
 		} else {
@@ -55,6 +59,7 @@ export const handleFetchItems = ({
 		}
 
 		if (startAfterDoc) ref = ref.startAfter(startAfterDoc);
+
 		if (askItemsToValid)
 			ref
 				.where('verified', '==', false)

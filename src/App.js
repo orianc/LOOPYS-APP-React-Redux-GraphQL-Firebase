@@ -27,19 +27,27 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import AdminToolBar from './components/AdminToolBar/AdminToolBar';
 import ItemPage from './pages/ItemPage/ItemPage';
 import { fetchItemsStart } from './redux/Items/items.actions';
+import { reloadExchangeState } from './redux/Exchange/exchange.actions';
 
 const mapState = ({ items, user }) => ({
 	item: items.item,
+	currentUser: user.currentUser,
 });
 
 const App = (props) => {
 	const dispatch = useDispatch();
-	const { item } = useSelector(mapState);
+	const { item, currentUser } = useSelector(mapState);
+	console.log(currentUser);
 
 	useEffect(() => {
 		dispatch(checkUserSession());
-		dispatch(fetchItemsStart());
+		dispatch(fetchItemsStart({ notDone: true }));
 	}, []);
+
+	useEffect(() => {
+		console.log('here', currentUser);
+		dispatch(reloadExchangeState(currentUser));
+	}, [currentUser]);
 
 	return (
 		<div className="App">

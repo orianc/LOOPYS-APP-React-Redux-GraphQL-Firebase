@@ -21,7 +21,7 @@ const Items = (props) => {
 	const { data, queryDoc, isLastPage } = itemsData;
 
 	useEffect(() => {
-		dispatch(fetchItemsStart({ filterType }));
+		dispatch(fetchItemsStart({ filterType, notDone: true }));
 	}, [filterType]);
 
 	// console.log(filterType);
@@ -73,13 +73,13 @@ const Items = (props) => {
 		<div style={{ paddingBottom: 10 }}>
 			<div className="itemsWrapper">
 				<div className="itemsIntro">
-					<h1>Retrouvez toutes la boucle ici !</h1>
+					<h1>Retrouvez toute la boucle ici !</h1>
 				</div>
 				<SearchInput handleChange={handleFilters} defaultValue={filterType} />
 
 				{data.map((item, pos) => (
 					<>
-						{item.verified && item.state !== 'done' && (
+						{item.verified && item.state === 'open' && (
 							<ItemCard item={item} index={pos} />
 						)}
 					</>

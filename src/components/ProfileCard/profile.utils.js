@@ -5,4 +5,5 @@ export const updateProfile = (user) => {
 	const ref = firestore.collection('users').doc(uid);
 
 	ref.update(user);
+	console.log('ok');
 };

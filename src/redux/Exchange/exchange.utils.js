@@ -98,11 +98,15 @@ export const handleRemoveExchangeItem = ({
 };
 
 export const checkExchangeDbResult = (currentUser) => {
+	console.log(currentUser.id);
 	return new Promise((resolve, reject) => {
-		const doc = firestore.collection('items').where('askedBy', '==', {
-			uid: currentUser.id,
-			askerName: currentUser.displayName,
-		});
+		const doc = firestore
+			.collection('items')
+			.where('clearHistoryAsker', '==', false)
+			.where('askedBy', '==', {
+				uid: currentUser.id,
+				askerName: currentUser.displayName,
+			});
 
 		doc
 			.get()
@@ -115,7 +119,7 @@ export const checkExchangeDbResult = (currentUser) => {
 						};
 					}),
 				];
-
+				console.log(data);
 				resolve(data);
 			})
 			.catch((e) => reject(e));
@@ -163,10 +167,17 @@ export const loopysTransaction = async (loopysValue, askerId, authorId) => {
 };
 
 export const handleClearExchangeHistory = (exchangeItems) => {
-	console.log(exchangeItems);
 	const data = [];
-	exchangeItems.map((item) => item.state !== 'done' && data.push(item));
-	console.log(data);
+
+	exchangeItems.map((item) => {
+		if (item.state !== 'done') data.push(item);
+		if (item.state === 'done')
+			firestore
+				.collection('items')
+				.doc(item.documentId)
+				.update({ clearHistoryAsker: true })
+				.then(() => console.log('clearHistoryAsker'));
+	});
 
 	return data;
 };

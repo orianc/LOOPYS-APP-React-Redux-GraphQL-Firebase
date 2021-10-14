@@ -1,5 +1,5 @@
 // dependencies
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 // redux
@@ -12,11 +12,23 @@ import './header.scss';
 
 const mapState = ({ user, exchange }) => ({
 	currentUser: user.currentUser,
-	currentExchangeCount: exchange.exchangeItems.length,
+	currentExchangeCount: exchange.exchangeItems,
 });
 const Header = (props) => {
 	const dispatch = useDispatch();
 	const { currentUser, currentExchangeCount } = useSelector(mapState);
+	console.log(currentExchangeCount);
+	const [counter, setCounter] = useState(0);
+	useEffect(() => {
+		if (Array.isArray(currentExchangeCount)) {
+			currentExchangeCount.map(
+				(item) => item.state !== 'done' && setCounter(counter + 1),
+			);
+		}
+		return () => {
+			setCounter(0);
+		};
+	}, [currentExchangeCount]);
 
 	const signOut = () => {
 		dispatch(signOutUserStart());
@@ -59,9 +71,7 @@ const Header = (props) => {
 							<span>Voir mon profil</span>
 						</Link>
 						<Link to="/exchange" className="exchange">
-							{currentExchangeCount > 0 && (
-								<span className="exchangeCount">{currentExchangeCount}</span>
-							)}
+							{counter > 0 && <span className="exchangeCount">{counter}</span>}
 							<img src={SpinMoney} alt="icon" height={20} />
 							{/* <svg
 								xmlns="http://www.w3.org/2000/svg"

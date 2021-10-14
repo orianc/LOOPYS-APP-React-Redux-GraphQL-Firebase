@@ -18,7 +18,6 @@ export function* reloadExchangeItems({ payload }) {
 }
 
 export function* onReloadExchangeItemStart() {
-	yield takeLatest(userTypes.SIGN_IN_SUCCESS, reloadExchangeItems);
 	yield takeLatest(exchangeTypes.RELOAD_EXCHANGE_STATE, reloadExchangeItems);
 }
 

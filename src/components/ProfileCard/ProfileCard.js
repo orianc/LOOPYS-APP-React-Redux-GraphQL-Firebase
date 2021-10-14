@@ -29,7 +29,7 @@ const ProfileCard = ({ userID }) => {
 		var myItems = items.filter((item) => item.authorId === userID);
 		console.log(myItems);
 		return setUserItems(myItems);
-	}, [profile]);
+	}, [profile, items]);
 
 	console.log('profile', profile);
 	console.log('myItems', userItems);

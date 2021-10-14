@@ -27,9 +27,9 @@ const Homepage = (props) => {
 					style={{ margin: '10px' }}
 				/>{' '}
 				<br />
-				Quand un Looper souhaite votre bien et que l'échange s'effectue vous
-				récupérer des Loopys qui vous permettront à votre tour de demander un
-				bien qui vous interesse. <br />
+				Quand un Looper souhaite votre proposition et que l'échange s'effectue
+				vous récupérez des Loopys qui vous permettront à votre tour de demander
+				ce qui vous interesse. <br />
 				Plus vous donnez, plus vous recevez !
 			</p>
 			<h3>Prêt à rentrer dans la boucle des échanges ?</h3>

@@ -1,4 +1,9 @@
 .checkout {
+	.titleSection {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+	}
 	.btn {
 		font-size: 9px;
 		padding: 6px;
@@ -19,7 +24,17 @@
 			}
 		}
 	}
-
+	.btnClear {
+		font-size: 9px;
+		padding: 6px;
+		background-color: var(--main-red);
+		color: white;
+		border-radius: 6px;
+		cursor: pointer;
+		&:hover {
+			background-color: #ec5252;
+		}
+	}
 	h1 {
 		font-family: 'Quicksand', sans-serif;
 		letter-spacing: -1px;

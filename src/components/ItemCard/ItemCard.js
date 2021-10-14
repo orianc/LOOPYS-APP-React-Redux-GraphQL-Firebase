@@ -52,7 +52,7 @@ const ItemCard = (props) => {
 
 	return (
 		<>
-			{item.documentId ? (
+			{item.documentId && item.state !== 'done' && (
 				<div
 					className="itemCard"
 					style={
@@ -177,10 +177,11 @@ const ItemCard = (props) => {
 								de : {author.displayName && author.displayName}
 							</p>
 						</Link>
-
-						<Button onClick={() => handleClickAddToExchange(item)}>
-							Ask for it
-						</Button>
+						{item.state === 'open' && (
+							<Button onClick={() => handleClickAddToExchange(item)}>
+								Ask for it
+							</Button>
+						)}
 
 						{currentUser &&
 						(currentUser.id === item.authorId ||
@@ -207,8 +208,6 @@ const ItemCard = (props) => {
 						) : null}
 					</div>
 				</div>
-			) : (
-				<p>Loading...</p>
 			)}
 		</>
 	);

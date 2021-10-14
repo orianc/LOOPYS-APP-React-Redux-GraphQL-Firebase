@@ -1,3 +1,4 @@
+import { type } from 'os';
 import exchangeTypes from './exchange.types';
 
 export const addItem = (nextExchangeItem, askerName) => ({
@@ -28,4 +29,9 @@ export const confirmExchangeStart = (item) => ({
 export const confirmReceptionStart = (item) => ({
 	type: exchangeTypes.CONFIRM_RECEPTION_START,
 	payload: item,
+});
+
+export const clearExchangeHistory = (exchangeItems) => ({
+	type: exchangeTypes.CLEAR_EXCHANGE_HISTORY,
+	payload: exchangeItems,
 });

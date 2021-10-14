@@ -4,6 +4,7 @@ import {
 	handleAddToExchange,
 	handleRemoveExchangeItem,
 	handleReloadExchangeItem,
+	handleClearExchangeHistory,
 } from './exchange.utils';
 
 const initialState = {
@@ -38,7 +39,11 @@ const exchangeReducer = (state = initialState, action) => {
 					exchangeItemToRemove: action.payload,
 				}),
 			};
-
+		case exchangeTypes.CLEAR_EXCHANGE_HISTORY:
+			return {
+				...state,
+				exchangeItems: handleClearExchangeHistory(action.payload),
+			};
 		default:
 			return state;
 	}

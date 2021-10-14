@@ -161,3 +161,12 @@ export const loopysTransaction = async (loopysValue, askerId, authorId) => {
 		.then(() => console.log('Asker Loopys upDate.'))
 		.catch((e) => console.error(e));
 };
+
+export const handleClearExchangeHistory = (exchangeItems) => {
+	console.log(exchangeItems);
+	const data = [];
+	exchangeItems.map((item) => item.state !== 'done' && data.push(item));
+	console.log(data);
+
+	return data;
+};

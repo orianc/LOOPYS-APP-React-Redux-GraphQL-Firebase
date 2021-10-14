@@ -78,7 +78,11 @@ const Items = (props) => {
 				<SearchInput handleChange={handleFilters} defaultValue={filterType} />
 
 				{data.map((item, pos) => (
-					<>{item.verified && <ItemCard item={item} index={pos} />}</>
+					<>
+						{item.verified && item.state !== 'done' && (
+							<ItemCard item={item} index={pos} />
+						)}
+					</>
 				))}
 			</div>
 			{!isLastPage && <LoadMore {...configLoadMore} />}

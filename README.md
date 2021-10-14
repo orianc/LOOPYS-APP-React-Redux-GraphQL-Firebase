@@ -4,7 +4,6 @@
 
 - bloquer les loopys d'un utilisateur quand un échange est en attente
 - on ad form : upload image.
-- gérer l'affichage des items quand le statut change ( 'asked', 'done')
 
 ## Next features
 

@@ -1,3 +1,7 @@
+/* eslint-disable quotes */
+/* eslint-disable indent */
+/* eslint-disable no-tabs */
+
 module.exports = {
 	root: true,
 	env: {
@@ -5,5 +9,7 @@ module.exports = {
 		node: true,
 	},
 	extends: ['eslint:recommended', 'google'],
-	rules: { no-tabs: ['error', {allowIndentationTabs:true}] },
+	rules: {
+		quotes: ['error', 'double'],
+	},
 };

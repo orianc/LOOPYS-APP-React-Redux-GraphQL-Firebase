@@ -84,7 +84,9 @@ const ItemCard = (props) => {
 									<img
 										style={displayItemPage && { height: 400 }}
 										src={
-											'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+											item.photoUrl
+												? item.photoUrl
+												: 'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
 										}
 										alt={item.name}
 									/>
@@ -93,7 +95,9 @@ const ItemCard = (props) => {
 								<img
 									style={displayItemPage && { height: 400 }}
 									src={
-										'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+										item.photoUrl
+											? item.photoUrl
+											: 'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
 									}
 									alt={item.name}
 								/>

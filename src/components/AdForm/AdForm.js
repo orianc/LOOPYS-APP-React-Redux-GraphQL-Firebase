@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { storage } from '../../firebase/utils';
 // redux
 import { addItemStart } from '../../redux/Items/items.actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +26,7 @@ const AdForm = (props) => {
 	const initialState = {
 		id: Math.round(Math.random() * 10000000000),
 		name: '',
-		photos: [],
+		photos: '',
 		resume: '',
 		send: false,
 		withdrawal: false,
@@ -44,6 +45,7 @@ const AdForm = (props) => {
 	const [displayAlert, setDisplayAlert] = useState('none');
 	const [displayAlertSuccess, setDisplayAlertSuccess] = useState('none');
 
+	console.log(Item);
 	const handleChange = (e) => {
 		setItem({ ...Item, [e.target.name]: e.target.value });
 	};
@@ -79,6 +81,13 @@ const AdForm = (props) => {
 		}
 	};
 
+	// const onFileChange = (e) => {
+	// 	const file = e.target.files[0];
+	// 	const storageRef = storage.ref();
+	// 	const fileRef = storageRef.child(file.name);
+	// 	fileRef.put(file).then(() => setItem({ ...Item, photos: fileRef }));
+	// };
+
 	// console.log(Item);
 	return (
 		<AuthWrapper headLine="Publier une annonce">
@@ -106,11 +115,10 @@ const AdForm = (props) => {
 					required
 				/>
 				<FormInput
-					onChange={(e) => setItem({ ...Item, photos: e.target.files })}
+					onChange={(e) => setItem({ ...Item, photos: e.target.files[0] })}
 					name="photos"
 					type="file"
 					style={{ color: maxFile() ? 'crimson' : null }}
-					multiple
 					capture
 					accept="image/*"
 				/>

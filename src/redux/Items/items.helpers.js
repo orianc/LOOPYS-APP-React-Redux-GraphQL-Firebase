@@ -16,19 +16,17 @@ export const handleAddItem = (item) => {
 	});
 };
 
-export const handleAddImage = async (blob, docId) => {
+export const handleAddImage = async (photo, docId) => {
 	// console.log('in handleImage:', docRef);
-	return new Promise((resolve, reject) => {
-		storage
-			.ref(`items/${docId}`)
-			.put(blob)
-			.then(() => {
-				resolve();
-			})
-			.catch((err) => {
-				reject(err);
-			});
+	const ref = await storage.ref('items').child(photo.name);
+
+	await ref.put(photo).then(() => {
+		console.log('file uploaded');
 	});
+	const photoUrl = await ref.getDownloadURL();
+
+	console.log('file url', photoUrl);
+	return photoUrl;
 };
 
 export const handleFetchItems = ({

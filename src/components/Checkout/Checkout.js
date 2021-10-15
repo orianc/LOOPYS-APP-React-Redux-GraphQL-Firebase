@@ -114,7 +114,9 @@ const Checkout = ({}) => {
 									<h3 className="nameItem">{item.name}</h3>
 									<img
 										src={
-											'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+											item.photoUrl
+												? item.photoUrl
+												: 'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
 										}
 										height={50}
 										alt="itemImage"
@@ -186,7 +188,9 @@ const Checkout = ({}) => {
 
 									<img
 										src={
-											'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+											item.photoUrl
+												? item.photoUrl
+												: 'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
 										}
 										height={50}
 										alt="itemImage"
@@ -285,7 +289,9 @@ const Checkout = ({}) => {
 									<h3 className="nameItem">{item.name}</h3>
 									<img
 										src={
-											'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+											item.photoUrl
+												? item.photoUrl
+												: 'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
 										}
 										height={50}
 										alt="itemImage"
@@ -332,7 +338,9 @@ const Checkout = ({}) => {
 
 									<img
 										src={
-											'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
+											item.photoUrl
+												? item.photoUrl
+												: 'https://www.gaiacreators.fr/wp-content/uploads/2018/02/GWNH0172-2-1.png'
 										}
 										height={50}
 										alt="itemImage"

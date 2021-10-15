@@ -28,12 +28,15 @@ export function* addItem({
 	},
 }) {
 	try {
+		const photoUrl = yield handleAddImage(photos, id);
+		yield console.log(photoUrl);
 		yield handleAddItem({
 			id,
 			authorId,
 			createAt,
 			loopysValue,
 			name,
+			photoUrl: photoUrl,
 			resume,
 			send,
 			withdrawal,
@@ -41,7 +44,7 @@ export function* addItem({
 			state,
 			keyWords,
 			clearHistoryAsker: false,
-		}).then(() => handleAddImage(photos, id));
+		});
 	} catch (err) {
 		yield console.error('on add item saga', err);
 	}

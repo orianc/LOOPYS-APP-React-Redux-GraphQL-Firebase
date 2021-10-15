@@ -1,3 +1,5 @@
+This is a Firebase React Redux Web Aapplication
+
 # Dev line
 
 ## Need a fix

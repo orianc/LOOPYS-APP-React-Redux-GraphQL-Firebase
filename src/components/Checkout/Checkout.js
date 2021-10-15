@@ -140,7 +140,7 @@ const Checkout = ({}) => {
 										<div className="acceptedDiv">
 											<Link to={`/profile/${item.authorId}`}>
 												<span>
-													L'échange à été confirmé par l'autheur
+													L'échange a été confirmé par l'auteur
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														width="16"

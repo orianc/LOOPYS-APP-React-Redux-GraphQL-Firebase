@@ -38,12 +38,13 @@ const AdminPage = () => {
 	const getAllUsers = async () => {
 		const Ref = await firestore.collection('/users').get();
 		const docs = Ref.docs;
-		const data = [docs.map((doc) => doc.data())];
+		const data = docs.map((doc) => doc.data());
 		return data;
 	};
+
 	useEffect(() => {
 		dispatch(fetchItemsStart({ askItemsToValid: true }));
-		getAllUsers().then((res) => setUsersList(res[0]));
+		getAllUsers().then((res) => setUsersList(res));
 	}, [reload]);
 
 	// console.log('itemsData', itemsData);

@@ -19,9 +19,15 @@ const Items = (props) => {
 	const { itemsData } = useSelector(mapState);
 	const [oups, setOups] = useState(false);
 	const { data, queryDoc, isLastPage } = itemsData;
-
+	const [timeOutId, setTimeOutId] = useState(null);
+	// reprise de l'id du timeout pour voir si il existe
+	// debounce
 	useEffect(() => {
-		dispatch(fetchItemsStart({ filterType, notDone: true }));
+		timeOutId !== null && clearTimeout(timeOutId);
+		const res = setTimeout(() => {
+			dispatch(fetchItemsStart({ filterType, notDone: true }));
+		}, 3000);
+		setTimeOutId(res);
 	}, [filterType]);
 
 	// console.log(filterType);
@@ -29,6 +35,21 @@ const Items = (props) => {
 		e.preventDefault();
 		const nextFilter = e.target.value.toLowerCase().split(' ');
 		history.push(`/search/${nextFilter}`);
+	};
+
+	const handleLoadMore = () => {
+		dispatch(
+			fetchItemsStart({
+				filterType,
+				startAfterDoc: queryDoc,
+				persistItems: data,
+				isLastPage,
+			}),
+		);
+	};
+
+	const configLoadMore = {
+		onLoadMoreEvt: handleLoadMore,
 	};
 
 	if (!Array.isArray(data)) return null;
@@ -53,21 +74,6 @@ const Items = (props) => {
 			</div>
 		);
 	}
-
-	const handleLoadMore = () => {
-		dispatch(
-			fetchItemsStart({
-				filterType,
-				startAfterDoc: queryDoc,
-				persistItems: data,
-				isLastPage,
-			}),
-		);
-	};
-
-	const configLoadMore = {
-		onLoadMoreEvt: handleLoadMore,
-	};
 
 	return (
 		<div style={{ paddingBottom: 10 }}>

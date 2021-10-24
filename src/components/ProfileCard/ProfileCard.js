@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getAuthorName } from '../ItemCard/ItemCardUtils';
 import FormInput from './../../statics-components/Forms/FormInput/FormInput';
 import Button from './../../statics-components/Button/Button';
@@ -15,7 +15,7 @@ const mapState = ({ user, items }) => ({
 const ProfileCard = ({ userID }) => {
 	const { currentUser, items } = useSelector(mapState);
 	const [profile, setProfile] = useState({});
-	const { email, tel, loopys } = profile;
+	const { tel, loopys } = profile;
 	const [userAccount, setUserAccount] = useState(currentUser);
 	const [userItems, setUserItems] = useState({});
 
@@ -73,14 +73,6 @@ const ProfileCard = ({ userID }) => {
 
 					<div className="wrapper">
 						<div className="informationAccount">
-							{/* <div className="line">
-						<label>Email :</label>
-						<FormInput
-							placeholder={email}
-							name="email"
-							onChange={(e) => handleChange(e)}
-						/>
-					</div> */}
 							{profile.id === currentUser.id && (
 								<div className="line">
 									<label>Téléphone :</label>

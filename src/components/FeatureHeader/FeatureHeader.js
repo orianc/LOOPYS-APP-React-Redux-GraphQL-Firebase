@@ -1,6 +1,6 @@
 import React from 'react';
 import './featureHeader.scss';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const FeatureHeader = (props) => {
 	const history = useHistory();

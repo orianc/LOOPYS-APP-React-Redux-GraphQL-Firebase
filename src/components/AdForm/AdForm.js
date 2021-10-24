@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { storage } from '../../firebase/utils';
 // redux
 import { addItemStart } from '../../redux/Items/items.actions';
 import { useDispatch, useSelector } from 'react-redux';

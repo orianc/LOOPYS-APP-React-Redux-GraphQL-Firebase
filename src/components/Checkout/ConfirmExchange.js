@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import Button from '../../statics-components/Button/Button';
-const ConfirmExchange = ({ valid, cancel, display, children, headLine }) => {
-	// const [isConfirm, SetIsConfirm] = useState('waitAsk');
 
+const ConfirmExchange = ({ valid, cancel, display, children, headLine }) => {
 	return (
 		<div style={{ display: display }} className="askConfirm">
 			<h3>{headLine}</h3>

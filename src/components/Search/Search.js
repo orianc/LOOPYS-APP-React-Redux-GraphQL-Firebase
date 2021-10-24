@@ -1,16 +1,6 @@
 import React from 'react';
 import './search.scss';
 
-{
-	/* 
-
-Les futurs filtres possibles :
- méthode de retrait, jauge de valeur Loopys, date de création
-				<input type="checkbox" label="Retrait sur place" />
-				<input type="checkbox" label="Envois" /> 				
-				*/
-}
-
 const SearchInput = ({
 	options,
 	defaultValue,

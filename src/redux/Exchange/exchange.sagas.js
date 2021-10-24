@@ -1,5 +1,4 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
-import userTypes from '../User/user.types';
 import {
 	checkExchangeDbResult,
 	updateDBItemState,

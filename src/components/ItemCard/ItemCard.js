@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-// firebase
-import { firestore } from '../../firebase/utils';
+
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import {

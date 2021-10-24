@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router';
 import { useHistory } from 'react-router';
 // redux
 import { useDispatch, useSelector } from 'react-redux';

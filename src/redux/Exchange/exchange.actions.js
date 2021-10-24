@@ -1,4 +1,3 @@
-import { type } from 'os';
 import exchangeTypes from './exchange.types';
 
 export const addItem = (nextExchangeItem, askerName) => ({

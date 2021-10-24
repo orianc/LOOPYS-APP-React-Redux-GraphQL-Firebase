@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteItemStart } from '../../redux/Items/items.actions';
 import { fetchItemsStart } from '../../redux/Items/items.actions';
@@ -28,7 +28,6 @@ const Checkout = ({}) => {
 	const [displayConfirmReception, setDisplayConfirmReception] =
 		useState('none');
 	const [currentExchangeAsk, setCurrentExchangeAsk] = useState({});
-	const history = useHistory();
 
 	useEffect(() => {
 		dispatch(reloadExchangeState(currentUser));

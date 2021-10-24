@@ -3,7 +3,6 @@ import userTypes from '../User/user.types';
 import {
 	handleAddToExchange,
 	handleRemoveExchangeItem,
-	handleReloadExchangeItem,
 	handleClearExchangeHistory,
 } from './exchange.utils';
 

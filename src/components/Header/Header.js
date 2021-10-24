@@ -17,7 +17,7 @@ const mapState = ({ user, exchange }) => ({
 const Header = (props) => {
 	const dispatch = useDispatch();
 	const { currentUser, currentExchangeCount } = useSelector(mapState);
-	console.log(currentExchangeCount);
+	// console.log(currentExchangeCount);
 	const [counter, setCounter] = useState(0);
 	useEffect(() => {
 		if (Array.isArray(currentExchangeCount)) {

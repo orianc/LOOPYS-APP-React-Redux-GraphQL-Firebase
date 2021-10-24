@@ -12,7 +12,7 @@ const mapState = ({ items }) => ({
 	itemsData: items.items,
 });
 
-const Items = (props) => {
+const Items = ({}) => {
 	const history = useHistory();
 	const { filterType } = useParams();
 	const dispatch = useDispatch();
@@ -20,17 +20,18 @@ const Items = (props) => {
 	const [oups, setOups] = useState(false);
 	const { data, queryDoc, isLastPage } = itemsData;
 	const [timeOutId, setTimeOutId] = useState(null);
-	// reprise de l'id du timeout pour voir si il existe
+
 	// debounce
+	// reprise de l'id du timeout pour voir si il existe
+
 	useEffect(() => {
 		timeOutId !== null && clearTimeout(timeOutId);
 		const res = setTimeout(() => {
 			dispatch(fetchItemsStart({ filterType, notDone: true }));
-		}, 3000);
+		}, 1000);
 		setTimeOutId(res);
 	}, [filterType]);
 
-	// console.log(filterType);
 	const handleFilters = async (e) => {
 		e.preventDefault();
 		const nextFilter = e.target.value.toLowerCase().split(' ');
@@ -50,6 +51,13 @@ const Items = (props) => {
 
 	const configLoadMore = {
 		onLoadMoreEvt: handleLoadMore,
+	};
+
+	const configSearchInput = {
+		handleSearch: (e) => handleFilters(e),
+		maxLength: 20,
+		defaultValue: filterType,
+		placeholder: 'rechercher...',
 	};
 
 	if (!Array.isArray(data)) return null;
@@ -81,7 +89,7 @@ const Items = (props) => {
 				<div className="itemsIntro">
 					<h1>Retrouvez toute la boucle ici !</h1>
 				</div>
-				<SearchInput handleChange={handleFilters} defaultValue={filterType} />
+				<SearchInput {...configSearchInput} />
 
 				{data.map((item, pos) => (
 					<>

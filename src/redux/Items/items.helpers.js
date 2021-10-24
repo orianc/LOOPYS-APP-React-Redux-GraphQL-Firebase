@@ -110,17 +110,6 @@ export const handleFetchItems = ({
 	});
 };
 
-// export const handleFetchPhotos = (itemId) => {
-// 	return new Promise((resolve, reject) => {
-// 		storage
-// 			.getDownloadURL(storage.ref(`items/${itemId}`))
-// 			.then((url) => {
-// 				resolve(url);
-// 			})
-// 			.catch((err) => reject(err));
-// 	});
-// };
-
 export const handleDeleteItem = (itemId) => {
 	return new Promise((resolve, reject) => {
 		firestore

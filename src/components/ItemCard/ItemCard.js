@@ -82,7 +82,7 @@ const ItemCard = (props) => {
 							{!displayItemPage ? (
 								<Link to={`/item/${item.documentId}`}>
 									<img
-										style={displayItemPage && { height: 400 }}
+										style={displayItemPage && { maxWidth: '100%' }}
 										src={
 											item.photoUrl
 												? item.photoUrl
@@ -93,7 +93,7 @@ const ItemCard = (props) => {
 								</Link>
 							) : (
 								<img
-									style={displayItemPage && { height: 400 }}
+									style={displayItemPage && { maxWidth: '100%' }}
 									src={
 										item.photoUrl
 											? item.photoUrl
